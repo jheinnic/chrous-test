@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {BeginNewGame, EndCurrentGame, MinesweeperActions, ReportPlayerLoses, ReportPlayerWins} from '../store/minesweeper.actions';
-import {merge, Observable, Subject} from 'rxjs';
+import {BeginNewGame, EndCurrentGame, MinesweeperActions, MinesweeperActionTypes} from '../store/minesweeper.actions';
+import {merge, Observable, ObservableInput, Subject} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {State} from '../store/minesweeper.reducer';
 import {switchMap, takeUntil} from 'rxjs/operators';
@@ -9,27 +9,31 @@ import {switchMap, takeUntil} from 'rxjs/operators';
 @Injectable()
 export class GameServerClient {
 
-  public constructor(store: Store<State>, actions: Actions<MinesweeperActions>)
+  public constructor(
+    private readonly store: Store<State>,
+    private readonly actions: Actions<MinesweeperActions>) {
+
+  }
 
   private ingress: Subject<MinesweeperActions> = new Subject<MinesweeperActions>();
 
   @Effect({dispatch: true})
   public readonly commandTap: Observable<MinesweeperActions> =
-    actions.pipe(
-      ofType(BeginNewGame),
+    this.actions.pipe(
+      ofType(MinesweeperActionTypes.BeginNewGame),
       switchMap(
-        () => {
-          this.ingress.asObservable().pipe(
+        (_action: BeginNewGame, _index: number): ObservableInput<MinesweeperActions> => {
+          return this.ingress.asObservable().pipe(
             takeUntil(
               merge(
                 this.actions.pipe(
-                  ofType(ReportPlayerLoses)
+                  ofType(MinesweeperActionTypes.ReportPlayerLoses)
                 ),
                 this.actions.pipe(
-                  ofType(ReportPlayerWins)
+                  ofType(MinesweeperActionTypes.ReportPlayerWins)
                 ),
                 this.actions.pipe(
-                  ofType(EndCurrentGame)
+                  ofType(MinesweeperActionTypes.EndCurrentGame)
                 )
               )
             )
@@ -38,8 +42,7 @@ export class GameServerClient {
       )
     );
 
-  // @Effect({dispatch: true})
-  cancelGame(): void // Observable<MinesweeperActions>
+  cancelGame(): void
   {
     this.ingress.next(
       new EndCurrentGame()
