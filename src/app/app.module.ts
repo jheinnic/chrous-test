@@ -13,6 +13,7 @@ import {CoreModule} from './core/core.module';
 import {ContactsModule} from './features/contacts/contacts.module';
 import {MinesweeperModule} from './features/minesweeper/minesweeper.module';
 import {environment} from '../environments/environment';
+import {ChorusPageModule} from './features/chorus-page/chorus-page.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {environment} from '../environments/environment';
     ToymodModule,
     ContactsModule,
     MinesweeperModule,
+    ChorusPageModule,
     AppRoutingModule,
   ],
   providers: [],

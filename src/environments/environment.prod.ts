@@ -3,6 +3,7 @@ import {Keys} from 'simplytyped';
 
 export const environment = {
   production: true,
+  chorusApiUrl: 'https://static.chorus.ai/api',
   baseAppUrl: 'http://portfolio.jchein.name',
   mineSweeperApiUrl: 'http://localhost:3000',
   keycloakConfigPath: '/assets/keycloak.json',
@@ -23,6 +24,7 @@ function injectFromEnvironment(tokenName: Exclude<Keys<typeof environment>, 'pro
 }
 
 export const baseAppUrl: InjectionToken<string> = injectFromEnvironment('baseAppUrl');
+export const chorusApiUrl: InjectionToken<string> = injectFromEnvironment('chorusApiUrl');
 export const mineSweeperApiUrl: InjectionToken<string> = injectFromEnvironment('mineSweeperApiUrl');
 export const keycloakConfigPath: InjectionToken<string> = injectFromEnvironment('keycloakConfigPath');
 export const keycloakServerUrl: InjectionToken<string> = injectFromEnvironment('keycloakServerUrl');
