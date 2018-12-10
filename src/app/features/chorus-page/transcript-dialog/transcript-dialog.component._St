@@ -3,13 +3,13 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromStore from '../store/reducers/videos.reducer';
+import * as fromStore from '../store/reducers/video.reducer';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {filter, switchMap} from 'rxjs/operators';
 import {Observable, Subscription} from 'rxjs';
 import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
-import {Transcript} from '../store/models/videos.model';
+import {Transcript} from '../store/models/video.model';
 
 @Component({
   selector: 'cai-transcript-dialog',
@@ -25,7 +25,7 @@ export class TranscriptDialogComponent implements OnInit {
   public transcriptChanges: Subscription;
 
   constructor(
-    private store: Store<fromStore.State>,
+    private store: Store<fromStore.VideoEntityState>,
     private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef
   ) {

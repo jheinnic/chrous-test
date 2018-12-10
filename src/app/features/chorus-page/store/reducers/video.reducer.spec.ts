@@ -1,4 +1,4 @@
-import { reducer, initialState } from './videos.reducer';
+import { reducer, initialState } from './video.reducer';
 
 describe('Videos Reducer', () => {
   describe('unknown action', () => {

@@ -6,9 +6,7 @@ export function getOnEntryQueryParamGuardProvider(
   injectionToken: InjectionToken<CanActivate>, paramName: string): FactoryProvider {
   return {
     provide: injectionToken,
-    useFactory: (router: Router) => {
-      new OnEntryQueryParamGuard(router, paramName)
-    },
+    useFactory: (router: Router) => new OnEntryQueryParamGuard(router, paramName),
     deps: [Router]
   };
 }

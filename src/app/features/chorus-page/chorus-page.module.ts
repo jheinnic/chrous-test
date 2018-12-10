@@ -4,21 +4,35 @@ import {EffectsModule} from '@ngrx/effects';
 
 import {SharedModule} from '../../shared/shared.module';
 
-import * as fromVideos from './store/reducers/videos.reducer';
-import {VideosEffects} from './store/effects/videos.effects';
 import {PageContainerComponent} from './page-container/page-container.component';
 import {ChorusPageRoutingModule} from './chorus-page-routing.module';
+import { ViewTranscriptWidgetEffects } from './store';
+import { VideoCatalogEffects } from './store';
 import * as fromViewTranscriptWidget from './store/reducers/view-transcript-widget.reducer';
-import { ViewTranscriptWidgetEffects } from './store/effects/view-transcript-widget.effects';
+import * as fromVideoCatalog from './store/reducers/video-catalog.reducer';
+import * as fromTranscript from './store/reducers/transcript.reducer';
+import * as fromVideos from './store/reducers/video.reducer';
+import {VideoCatalogService} from './services/video-catalog.service';
+import {videoCatalogApiClient} from '../../shared/di/services-di.tokens';
+import {VideoCatalogApiClient} from './services/video-catalog-api-client.service';
 
 @NgModule({
   declarations: [PageContainerComponent],
   imports: [
     SharedModule,
     ChorusPageRoutingModule,
-    StoreModule.forFeature('videos', fromVideos.reducer),
-    EffectsModule.forFeature([VideosEffects, ViewTranscriptWidgetEffects]),
-    StoreModule.forFeature('viewTranscriptWidget', fromViewTranscriptWidget.reducer)
+    StoreModule.forFeature(fromVideos.featureKey, fromVideos.reducer),
+    StoreModule.forFeature(fromViewTranscriptWidget.featureKey, fromViewTranscriptWidget.reducer),
+    StoreModule.forFeature(fromVideoCatalog.featureKey, fromVideoCatalog.reducer),
+    StoreModule.forFeature(fromTranscript.featureKey, fromTranscript.reducer),
+    EffectsModule.forFeature([ViewTranscriptWidgetEffects, VideoCatalogEffects]),
+  ],
+  providers: [
+    VideoCatalogService,
+    {
+      provide: videoCatalogApiClient,
+      useClass: VideoCatalogApiClient
+    }
   ]
 })
 export class ChorusPageModule {}

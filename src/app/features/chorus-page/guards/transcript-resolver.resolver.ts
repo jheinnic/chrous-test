@@ -1,10 +1,11 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {isTranscript, Transcript} from '../store/models/videos.model';
-import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 import {Inject} from '@angular/core';
-import {filter, take} from 'rxjs/operators';
+import {filter, map, take, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+
+import {isTranscript, Transcript} from '../store/models/transcript.model';
+import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 
 export class TranscriptResolver implements Resolve<Transcript> {
   constructor(
@@ -18,6 +19,8 @@ export class TranscriptResolver implements Resolve<Transcript> {
   {
     const videoId = route.queryParamMap.get('id');
 
+    console.log(`Resolver attempting to preload ${this.chorusApiUrl}/${videoId}`);
+
     return this.httpClient.get(
       `${this.chorusApiUrl}/${videoId}.json`,
       {
@@ -25,8 +28,11 @@ export class TranscriptResolver implements Resolve<Transcript> {
         responseType: 'json'
       }
     ).pipe(
+      map((value) => {return {id: '', entries: value}} ),
       take(1),
-      filter(isTranscript)
+      tap((value) => {console.log(`Pre filter: ${JSON.stringify(value)}`); }),
+      filter(isTranscript),
+      tap((value) => {console.log(`Post filter: ${JSON.stringify(value)}`); }),
     );
   }
 }

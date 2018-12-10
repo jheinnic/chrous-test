@@ -6,7 +6,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
-import {moduleImportGuard} from '../utils/module-import-guard.helper';
+import {moduleImportGuard} from '../shared/utils/module-import-guard.helper';
+import {lruCacheFactoryService} from './core-di.tokens';
+import {LruCacheFactoryService} from './lru-cache-factory.service';
 
 
 @NgModule({
@@ -24,7 +26,12 @@ import {moduleImportGuard} from '../utils/module-import-guard.helper';
     }),
   ],
   declarations: [],
-  providers: [ ],
+  providers: [
+    {
+      provide: lruCacheFactoryService,
+      useClass: LruCacheFactoryService
+    }
+  ],
   exports: [
     RouterModule,
     BrowserModule,

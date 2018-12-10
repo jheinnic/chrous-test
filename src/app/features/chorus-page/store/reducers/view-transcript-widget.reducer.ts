@@ -9,6 +9,8 @@ export const initialState: State = {
 
 };
 
+export const featureKey = 'view-transcript-widget';
+
 export function reducer(state = initialState, action: ViewTranscriptWidgetActions): State {
   switch (action.type) {
 

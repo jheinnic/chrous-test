@@ -6,9 +6,7 @@ export function getQueryParamGuardProvider(
   injectionToken: InjectionToken<CanActivate>, paramName: string): FactoryProvider {
   return {
     provide: injectionToken,
-    useFactory: () => {
-      new QueryParamGuard(paramName)
-    },
+    useFactory: () => new QueryParamGuard(paramName),
   };
 }
 
