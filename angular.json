@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "chorustest": {
+    "chorus-test": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -21,7 +21,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/chorustest",
+            "outputPath": "dist/chorus-test",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -65,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "chorustest:build"
+            "browserTarget": "chorus-test:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "chorustest:build:production"
+              "browserTarget": "chorus-test:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "chorustest:build"
+            "browserTarget": "chorus-test:build"
           }
         },
         "test": {
@@ -111,7 +111,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/chorustest-server",
+            "outputPath": "dist/chorus-test-server",
             "main": "src/main.server.ts",
             "tsConfig": "src/tsconfig.server.json"
           },
@@ -129,20 +129,20 @@
         "app-shell": {
           "builder": "@angular-devkit/build-angular:app-shell",
           "options": {
-            "browserTarget": "chorustest:build",
-            "serverTarget": "chorustest:server",
+            "browserTarget": "chorus-test:build",
+            "serverTarget": "chorus-test:server",
             "route": "app-shell-path"
           },
           "configurations": {
             "production": {
-              "browserTarget": "chorustest:build:production",
-              "serverTarget": "chorustest:server:production"
+              "browserTarget": "chorus-test:build:production",
+              "serverTarget": "chorus-test:server:production"
             }
           }
         }
       }
     },
-    "chorustest-e2e": {
+    "chorus-test-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -151,11 +151,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "chorustest:serve"
+            "devServerTarget": "chorus-test:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "chorustest:serve:production"
+              "devServerTarget": "chorus-test:serve:production"
             }
           }
         },
@@ -206,5 +206,5 @@
       }
     }
   },
-  "defaultProject": "chorustest"
+  "defaultProject": "chorus-test"
 }
