@@ -1,35 +1,30 @@
+div#contentContainer {
+  height: 521px;
+  width: 824px;
+  background: #FFFFFF;
+  border: 1px solid #D7DADE;
+  border-radius: 5px;
+  position: relative;
+}
+
+#player {
+  position: relative;
+  height: 200px;
+  width: 300px;
+  top: 80px;
+  left: 260px;
+  background: #000000;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.30);
+  border-radius: 4px;
+}
+
 #bebo {
   background: rgba(238,110,255,0.10);
   border: 1px solid #EE6EFF;
   border-radius: 100px;
-  top: 661px;
-  left: 340px;
+  bottom: 84px;
+  left: 32px;
   height: 28px;
   width: 28px;
   position: absolute;
-}
-
-container {
-  top: 252px;
-  left: 308px;
-  background: #FFFFFF;
-  border: 1px solid #D7DADE;
-  border-radius: 5px;
-}
-
-#baseline {
-  position: absolute;
-  left: 0;
-  bottom: 4px;
-  width: 100vw;
-  height: 4px;
-  background: #00A7D1;
-}
-#player {
-  height: 200px;
-  width: 300px;
-  margin: 80px 260px 237px 260px;
-  background: #000000;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,0.30);
-  border-radius: 4px;
 }
