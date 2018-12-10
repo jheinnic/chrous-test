@@ -1,6 +1,6 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Videos } from './videos.model';
-import { VideosActions, VideosActionTypes } from './videos.actions';
+import { Videos } from '../models/videos.model';
+import { VideosActions, VideosActionTypes } from '../actions/videos.actions';
 
 export interface State extends EntityState<Videos> {
   // additional entities state properties

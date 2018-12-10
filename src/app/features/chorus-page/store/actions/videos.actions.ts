@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { Videos } from './videos.model';
+import { Videos } from '../models/videos.model';
 
 export enum VideosActionTypes {
   LoadVideoss = '[Videos] Load Videoss',
