@@ -8,10 +8,8 @@ import {AppEffects, reducerOptions, reducers} from './store';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
-import {ToymodModule} from './features/toymod/toymod.module';
 import {CoreModule} from './core/core.module';
 import {ContactsModule} from './features/contacts/contacts.module';
-import {MinesweeperModule} from './features/minesweeper/minesweeper.module';
 import {environment} from '../environments/environment';
 import {ChorusPageModule} from './features/chorus-page/chorus-page.module';
 
@@ -27,9 +25,7 @@ import {ChorusPageModule} from './features/chorus-page/chorus-page.module';
     CoreModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedModule,
-    ToymodModule,
     ContactsModule,
-    MinesweeperModule,
     ChorusPageModule,
     AppRoutingModule,
   ],
