@@ -1,23 +1,23 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Video } from '../models/video.model';
-import { VideoAction, VideoActionTypes } from '../actions/video.actions';
-import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {State} from '../../../contacts/store';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {createFeatureSelector} from '@ngrx/store';
 
-export interface VideoStoreContent extends EntityState<Video> {
+import {VideoAction, VideoActionTypes} from '../actions/video-item.actions';
+import {VideoItem} from '../models/video-item.model';
+
+export interface State extends EntityState<VideoItem> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<Video> = createEntityAdapter<Video>();
+export const adapter: EntityAdapter<VideoItem> = createEntityAdapter<VideoItem>();
 
-export const initialState: VideoStoreContent = adapter.getInitialState({
+export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
 export function reducer(
   state = initialState,
   action: VideoAction
-): VideoStoreContent {
+): State {
   switch (action.type) {
     case VideoActionTypes.AddVideo: {
       return adapter.addOne(action.payload.video, state);
@@ -65,9 +65,9 @@ export function reducer(
   }
 }
 
-export const featureKey = 'video-cache';
+export const featureKey = 'video-item';
 
-export const selectVideoEntitiesFeatureState = createFeatureSelector<VideoStoreContent>(featureKey);
+export const selectVideoEntitiesFeatureState = createFeatureSelector<State>(featureKey);
 
 const {
   selectIds,

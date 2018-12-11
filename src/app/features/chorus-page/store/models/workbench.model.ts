@@ -1,5 +1,6 @@
-export interface VideoCatalogMetadata {
-  loadState: VideoCatalogAvailability;
+export interface VideoWorkbench {
+  catalogLoadState: VideoCatalogAvailability;
+  focusVideoIdRef: string;
 }
 
 export enum VideoCatalogAvailability {

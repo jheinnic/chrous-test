@@ -1,21 +1,21 @@
 import {Inject, Injectable} from '@angular/core';
+import {take, withLatestFrom} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {Dictionary} from '@ngrx/entity';
 import {Store} from '@ngrx/store';
 import * as LRU from 'lru-cache';
 
 import {
-  AddVideos, DeleteTranscript, fromTranscript, fromVideo, Transcript, TranscriptEntry, UpsertTranscript,
-  UpsertVideo, Video
+  AddVideos, DeleteTranscript, Transcript, TranscriptEntry, UpsertTranscript, UpsertVideo,
+  VideoItem, fromTranscript, fromVideoItem, fromVideoMeta, fromWorkbench, UpsertVideoMeta
 } from '../store';
-import {IVideoCatalogApiClient} from './video-catalog-api-client.interface';
 import {ILruCacheFactoryService} from '../../../core/lru-cache-factory.interface';
 import {lruCacheFactoryService} from '../../../core/core-di.tokens';
+import {IChorusVideoApiClient} from './chorus-video-api-client.interface';
 import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
-import {take, withLatestFrom} from 'rxjs/operators';
-import {Dictionary} from '@ngrx/entity';
 
 @Injectable()
-export class VideoCatalogApiClient implements IVideoCatalogApiClient
+export class ChorusVideoApiClient implements IChorusVideoApiClient
 {
   private unusedTranscriptCache: LRU.Cache<string, Transcript>;
 
@@ -23,8 +23,10 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
     private readonly httpClient: HttpClient,
     @Inject(chorusApiUrl) private readonly chorusApiUrl: String,
     @Inject(lruCacheFactoryService) lruCacheFactory: ILruCacheFactoryService,
-    private readonly videoStore$: Store<fromVideo.VideoStoreContent>,
-    private readonly transcriptStore$: Store<fromTranscript.TranscriptStoreContent>)
+    private readonly videoItemStore$: Store<fromVideoItem.State>,
+    private readonly videoMetaStore$: Store<fromVideoMeta.State>,
+    private readonly transcriptStore$: Store<fromTranscript.State>,
+    private readonly workbenchStore$: Store<fromWorkbench.State>)
   {
     this.unusedTranscriptCache = lruCacheFactory.createCache({
       noDisposeOnSet: true,
@@ -40,13 +42,12 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
 
   public async loadCatalog(): Promise<void>
   {
-    this.videoStore$.dispatch(
+    this.videoItemStore$.dispatch(
       new AddVideos({
           videos: [
             {
               id: '4d79041e-f25f-421d-9e5f-3462459b9934',
-              title: 'Video Title',
-              needsMetadata: true
+              title: 'Video Title'
             }
           ]
         }
@@ -54,12 +55,12 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
     );
   }
 
-  public async loadMetadata(videoItem: Video)
+  public async loadMetadata(videoId: string)
   {
-    this.videoStore$.dispatch(
-      new UpsertVideo({
-        video: {
-          ...videoItem,
+    this.videoMetaStore$.dispatch(
+      new UpsertVideoMeta({
+        videoMeta: {
+          id: videoId,
           speakers: [],
           resolution: {
             width: 300,
@@ -75,7 +76,7 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
     let transcript: Transcript =
       this.unusedTranscriptCache.get(videoId);
 
-    if (! transcript) {
+    if (!transcript) {
       const transcriptEntries: Array<TranscriptEntry> =
         await this.httpClient.get<Array<TranscriptEntry>>(
           `${this.chorusApiUrl}/${videoId}.json`,
@@ -83,7 +84,8 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
             observe: 'body',
             responseType: 'json'
           }
-        ).toPromise();
+        )
+          .toPromise();
       transcript = {
         id: videoId,
         entries: transcriptEntries.sort(
@@ -96,8 +98,8 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
       this.unusedTranscriptCache.del(videoId);
     }
 
-    this.videoStore$.dispatch(
-      new UpsertTranscript({ transcript })
+    this.videoItemStore$.dispatch(
+      new UpsertTranscript({transcript})
     );
   }
 
@@ -105,15 +107,17 @@ export class VideoCatalogApiClient implements IVideoCatalogApiClient
   {
     this.transcriptStore$.select(
       fromTranscript.selectTranscriptEntities
-    ).pipe(
-      withLatestFrom(),
-      take(1)
-    ).subscribe((entities: Dictionary<Transcript>) => {
-      this.unusedTranscriptCache.set(videoId, entities[videoId])
-    });
+    )
+      .pipe(
+        withLatestFrom(),
+        take(1)
+      )
+      .subscribe((entities: Dictionary<Transcript>) => {
+        this.unusedTranscriptCache.set(videoId, entities[videoId])
+      });
 
     this.transcriptStore$.dispatch(
-      new DeleteTranscript({ id: videoId })
+      new DeleteTranscript({id: videoId})
     );
   }
 }

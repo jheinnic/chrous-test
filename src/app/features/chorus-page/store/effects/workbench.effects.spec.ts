@@ -2,21 +2,21 @@ import { TestBed, inject } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 
-import { ViewTranscriptWidgetEffects } from './view-transcript-widget.effects';
+import { WorkbenchEffects } from './workbench.effects';
 
-describe('ViewTranscriptWidgetEffects', () => {
+describe('VideoCatalogEffects', () => {
   let actions$: Observable<any>;
-  let effects: ViewTranscriptWidgetEffects;
+  let effects: WorkbenchEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ViewTranscriptWidgetEffects,
+        WorkbenchEffects,
         provideMockActions(() => actions$)
       ]
     });
 
-    effects = TestBed.get(ViewTranscriptWidgetEffects);
+    effects = TestBed.get(WorkbenchEffects);
   });
 
   it('should be created', () => {

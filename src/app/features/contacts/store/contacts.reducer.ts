@@ -1,7 +1,8 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import {createFeatureSelector} from '@ngrx/store';
+
 import { Contact } from './contacts.model';
 import { ContactActions, ContactActionTypes } from './contacts.actions';
-import {createFeatureSelector} from '@ngrx/store';
 
 export interface State extends EntityState<Contact> {
   // additional entities state properties

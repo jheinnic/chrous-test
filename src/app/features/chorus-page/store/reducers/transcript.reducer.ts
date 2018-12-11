@@ -4,21 +4,21 @@ import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {TranscriptActions, TranscriptActionTypes} from '../actions/transcript.actions';
 import {Transcript} from '../models/transcript.model';
 
-export interface TranscriptStoreContent extends EntityState<Transcript>
+export interface State extends EntityState<Transcript>
 {
   // additional entities state properties
 }
 
 export const adapter: EntityAdapter<Transcript> = createEntityAdapter<Transcript>();
 
-export const initialState: TranscriptStoreContent = adapter.getInitialState({
+export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
 
 export function reducer(
   state = initialState,
   action: TranscriptActions
-): TranscriptStoreContent
+): State
 {
   switch (action.type) {
     case TranscriptActionTypes.AddTranscript:
@@ -80,7 +80,7 @@ export function reducer(
 
 export const featureKey = 'transcript-cache';
 
-export const selectTranscriptEntitiesFeatureState = createFeatureSelector<TranscriptStoreContent>(
+export const selectTranscriptEntitiesFeatureState = createFeatureSelector<State>(
   featureKey);
 
 const {

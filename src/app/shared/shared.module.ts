@@ -6,8 +6,9 @@ import {PortalModule} from '@angular/cdk/portal';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
   MatButtonModule,
-  MatCardModule,
   MatGridListModule,
+  MatDialogModule,
+  MatCardModule,
   MatIconModule,
   MatListModule,
   MatMenuModule,
@@ -20,17 +21,18 @@ import {LayoutModule} from '@angular/cdk/layout';
 @NgModule({
   imports: [
     CommonModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
     LayoutModule,
-    FlexLayoutModule,
     PortalModule,
     MatButtonModule,
-    MatIconModule,
-    MatListModule,
+    MatDialogModule,
     MatGridListModule,
     MatCardModule,
+    MatIconModule,
+    MatListModule,
     MatMenuModule,
     MatTabsModule,
     // ColorPickerModule
@@ -38,16 +40,17 @@ import {LayoutModule} from '@angular/cdk/layout';
   declarations: [ ],
   exports: [
     CommonModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
     LayoutModule,
-    FlexLayoutModule,
     PortalModule,
     MatButtonModule,
-    MatIconModule,
-    MatListModule,
+    MatDialogModule,
     MatGridListModule,
     MatCardModule,
+    MatIconModule,
+    MatListModule,
     MatMenuModule,
     MatTabsModule,
   ]

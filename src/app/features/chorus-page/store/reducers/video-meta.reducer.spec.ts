@@ -1,6 +1,6 @@
-import { reducer, initialState } from './video.reducer';
+import { reducer, initialState } from '../reducers/video-meta.reducer';
 
-describe('Videos Reducer', () => {
+describe('VideoMeta Reducer', () => {
   describe('unknown action', () => {
     it('should return the initial state', () => {
       const action = {} as any;

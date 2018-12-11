@@ -1,6 +1,6 @@
-import { reducer, initialState } from './view-transcript-widget.reducer';
+import { reducer, initialState } from './workbench.reducer';
 
-describe('ViewTranscriptWidget Reducer', () => {
+describe('VideoCatalog Reducer', () => {
   describe('an unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;

@@ -3,12 +3,12 @@ import {
 } from '@angular/core';
 import {Store} from '@ngrx/store';
 
-import * as fromStore from '../store/reducers/video.reducer';
+import * as fromStore from '../store/reducers/video-item.reducer';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {filter, switchMap} from 'rxjs/operators';
 import {of, Subscription} from 'rxjs';
 import {Transcript} from '../store/models/transcript.model';
-import {VideoCatalogService} from '../services/video-catalog.service';
+import {VideoWorkbenchService} from '../services/video-workbench.service';
 
 @Component({
   selector: 'cai-chorus-page',
@@ -28,9 +28,9 @@ export class PageContainerComponent implements OnInit
   public transcriptChanges: Subscription;
 
   constructor(
-    private readonly store: Store<fromStore.VideoStoreContent>,
+    private readonly store: Store<fromStore.State>,
     private readonly route: ActivatedRoute,
-    private readonly videoCatalogService: VideoCatalogService,
+    private readonly videoCatalogService: VideoWorkbenchService,
     private readonly changeDetector: ChangeDetectorRef
   )
   {

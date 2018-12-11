@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { Video } from '../models/video.model';
+import { VideoItem } from '../models/video-item.model';
 
 export enum VideoActionTypes {
   LoadVideos = '[Video] Load Videos',
@@ -18,43 +18,43 @@ export enum VideoActionTypes {
 export class LoadVideos implements Action {
   readonly type = VideoActionTypes.LoadVideos;
 
-  constructor(public payload: { videos: Video[] }) {}
+  constructor(public payload: { videos: VideoItem[] }) {}
 }
 
 export class AddVideo implements Action {
   readonly type = VideoActionTypes.AddVideo;
 
-  constructor(public payload: { video: Video }) {}
+  constructor(public payload: { video: VideoItem }) {}
 }
 
 export class UpsertVideo implements Action {
   readonly type = VideoActionTypes.UpsertVideo;
 
-  constructor(public payload: { video: Video }) {}
+  constructor(public payload: { video: VideoItem }) {}
 }
 
 export class AddVideos implements Action {
   readonly type = VideoActionTypes.AddVideos;
 
-  constructor(public payload: { videos: Video[] }) {}
+  constructor(public payload: { videos: VideoItem[] }) {}
 }
 
 export class UpsertVideos implements Action {
   readonly type = VideoActionTypes.UpsertVideos;
 
-  constructor(public payload: { videos: Video[] }) {}
+  constructor(public payload: { videos: VideoItem[] }) {}
 }
 
 export class UpdateVideo implements Action {
   readonly type = VideoActionTypes.UpdateVideo;
 
-  constructor(public payload: { video: Update<Video> }) {}
+  constructor(public payload: { video: Update<VideoItem> }) {}
 }
 
 export class UpdateVideos implements Action {
   readonly type = VideoActionTypes.UpdateVideos;
 
-  constructor(public payload: { videos: Update<Video>[] }) {}
+  constructor(public payload: { videos: Update<VideoItem>[] }) {}
 }
 
 export class DeleteVideo implements Action {

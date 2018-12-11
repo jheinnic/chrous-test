@@ -1,16 +1,20 @@
-export * from './actions/video.actions';
-export * from './actions/transcript.actions';
-export * from './actions/video-catalog.actions';
-export * from './actions/view-transcript-widget.actions';
 
-export * from './effects/video-catalog.effects';
-export * from './effects/view-transcript-widget.effects';
+export * from './models/workbench.model';
+export * from './actions/workbench.actions';
+export * from './effects/workbench.effects';
 
-export * from './models/video.model';
-export * from './models/video-catalog.model';
-// export * from './models/view-transcript-widget.model';
+export * from './models/video-item.model';
+export * from './actions/video-item.actions';
+
+export * from './models/video-meta.model';
+export * from './actions/video-meta.actions';
+
 export * from './models/transcript.model';
+export * from './actions/transcript.actions';
 
-import * as fromVideo from './reducers/video.reducer';
+import * as fromVideoItem from './reducers/video-item.reducer';
+import * as fromVideoMeta from './reducers/video-meta.reducer';
 import * as fromTranscript from './reducers/transcript.reducer';
-export {fromVideo, fromTranscript}
+import * as fromWorkbench from './reducers/workbench.reducer';
+
+export {fromVideoItem, fromVideoMeta, fromTranscript, fromWorkbench}
