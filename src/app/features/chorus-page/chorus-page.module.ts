@@ -1,3 +1,4 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
@@ -12,11 +13,10 @@ import {ChorusPageRoutingModule} from './chorus-page-routing.module';
 import {fromVideoItem, fromVideoMeta, fromTranscript, fromWorkbench, WorkbenchEffects} from './store';
 import {ChorusVideoApiClient} from './services/chorus-video-api-client.service';
 import {TranscriptDialogComponent} from './transcript-dialog/transcript-dialog.component';
-import {CommonModule} from '@angular/common';
-import {TranscriptDialogEffects} from './transcript-dialog/transcript-dialog.effects';
+import {TranscriptDialogOutletComponent} from './transcript-dialog/transcript-dialog-outlet.component';
 
 @NgModule({
-  declarations: [PageContainerComponent, TranscriptDialogComponent],
+  declarations: [PageContainerComponent, TranscriptDialogComponent, TranscriptDialogOutletComponent],
   imports: [
     SharedModule,
     CommonModule,
@@ -25,7 +25,7 @@ import {TranscriptDialogEffects} from './transcript-dialog/transcript-dialog.eff
     StoreModule.forFeature(fromVideoMeta.featureKey, fromVideoMeta.reducer),
     StoreModule.forFeature(fromTranscript.featureKey, fromTranscript.reducer),
     StoreModule.forFeature(fromWorkbench.featureKey, fromWorkbench.reducer),
-    EffectsModule.forFeature([WorkbenchEffects, TranscriptDialogEffects]),
+    EffectsModule.forFeature([WorkbenchEffects]),
   ],
   providers: [
     {
@@ -36,7 +36,6 @@ import {TranscriptDialogEffects} from './transcript-dialog/transcript-dialog.eff
       provide: chorusVideoApiClient,
       useClass: ChorusVideoApiClient
     },
-    TranscriptDialogEffects
   ],
   entryComponents: [TranscriptDialogComponent]
 })
