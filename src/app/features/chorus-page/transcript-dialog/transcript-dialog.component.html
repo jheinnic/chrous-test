@@ -1,9 +1,14 @@
-<div id="contentContainer">
-  <video id="player" height="200" width="300" controls loop>
-    <source src="https://static.chorus.ai/api/{{videoId}}.mp4" type="video/mp4">
-    <track src="https://static.chorus.ai/api/{{videoId}}.json" type="application/json">
+<div id="contentContainer" *ngIf="!!videoData">
+  <h1>{{videoData.title}}</h1>
+  <video id="player" height="videoData.resolution.height" width="videoData.resolution.width" controls loop>
+    <source src="https://static.chorus.ai/api/{{videoData.id}}.mp4" type="video/mp4">
+    <track src="https://static.chorus.ai/api/{{videoData.id}}.json" type="application/json">
     Your browser does not support the video tag.
   </video>
+  <div class="transcriptEntry" *ngFor="let entry of videoData.entries">
+    <span color="red">{{entry.speaker}}</span>::<br>
+    <span color="blue">{{entry.snippet}}</span>
+    <span>{{entry.time}}</span>
+  </div>
   <div id="bebo"></div>
 </div>
-<a *ngIf="!videoId" [routerLink]="['']" [queryParams]="{id: '4d79041e-f25f-421d-9e5f-3462459b9934'}">Click Here</a>

@@ -1,5 +1,5 @@
 import {InjectionToken} from '@angular/core';
 
-export const videoCatalogApiClient = new InjectionToken('VideoCatalogApiClient');
-export const videoCatalogService = new InjectionToken('VideoCatalogService');
+export const chorusVideoApiClient = new InjectionToken('VideoCatalogApiClient');
+export const videoWorkbenchService = new InjectionToken('VideoCatalogService');
 

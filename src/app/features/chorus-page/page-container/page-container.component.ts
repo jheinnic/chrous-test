@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewEncapsulation
 } from '@angular/core';
 import {Store} from '@ngrx/store';
 
@@ -9,6 +9,8 @@ import {filter, switchMap} from 'rxjs/operators';
 import {of, Subscription} from 'rxjs';
 import {Transcript} from '../store/models/transcript.model';
 import {VideoWorkbenchService} from '../services/video-workbench.service';
+import {videoWorkbenchService} from '../chorus-page-di.tokens';
+import {fromWorkbench, OpenTranscriptByVideoId} from '../store';
 
 @Component({
   selector: 'cai-chorus-page',
@@ -28,29 +30,29 @@ export class PageContainerComponent implements OnInit
   public transcriptChanges: Subscription;
 
   constructor(
-    private readonly store: Store<fromStore.State>,
     private readonly route: ActivatedRoute,
-    private readonly videoCatalogService: VideoWorkbenchService,
-    private readonly changeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef,
+    private readonly store: Store<fromWorkbench.State>,
+    @Inject(videoWorkbenchService) private readonly videoWorkbenchService: VideoWorkbenchService
   )
   {
-    this.videoId = this.route.snapshot.queryParamMap.get('id');
-    console.log(`I see ${this.videoId} in the query params`);
+    // this.videoId = this.route.snapshot.queryParamMap.get('id');
+    // console.log(`I see ${this.videoId} in the query params`);
 
-    this.transcript = this.route.snapshot.data.transcript;
-    if (!! this.transcript) {
-      console.log(`I see ${JSON.stringify(this.transcript)} in the data.`)
-    } else {
-      console.log(`I found no transcript in the loader data...`);
-    }
+    // this.transcript = this.route.snapshot.data.transcript;
+    // if (!! this.transcript) {
+    //   console.log(`I see ${JSON.stringify(this.transcript)} in the data.`)
+    // } else {
+    //   console.log(`I found no transcript in the loader data...`);
+    // }
   }
 
   ngOnInit()
   {
     // SwitchMap will automatically close any previous subscription to the video catalog
     // service when it retrieves a new one on change-of-video Id.
-    this.transcriptChanges = this.route.queryParamMap.pipe(
-      switchMap((params: ParamMap) => {
+    this.transcriptChanges = this.route.queryParamMap.subscribe(
+      (params: ParamMap) => {
           const newVideoId = params.get('id');
           if (newVideoId !== this.videoId) {
             this.videoId = newVideoId;
@@ -58,19 +60,20 @@ export class PageContainerComponent implements OnInit
             this.changeDetector.markForCheck();
 
             if (!! this.videoId) {
-              return this.videoCatalogService.openVideoDetail(this.videoId)
+              // return this.videoWorkbenchService.selectTranscript$(this.videoId)
+              this.store.dispatch(
+                new OpenTranscriptByVideoId({id: this.videoId})
+              );
             }
           }
-
-          return of();
         }
-      )
-    ).subscribe(
-      (transcript: Transcript) => {
-        this.transcript = transcript;
-        this.changeDetector.markForCheck();
-      }
-    );
+      );
+    // ).subscribe(
+    //   (transcript: Transcript) => {
+    //     this.transcript = transcript;
+    //     this.changeDetector.markForCheck();
+    //   }
+    // );
   }
 
   ngOnDestroy() {

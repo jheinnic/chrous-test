@@ -1,17 +1,17 @@
 import {Inject, Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {Store} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import {switchMap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {ObservableInput, of} from 'rxjs';
 
 import {
-  TranscriptRefreshCompleted,
-  TranscriptRefreshReleased,
-  WorkbenchActions, VideoWorkbenchActionTypes, VideoCatalogRefreshCompleted, VideoCatalogRefreshReleased
+  TranscriptLoadCompleted, TranscriptReleased, WorkbenchActions,
+  VideoWorkbenchActionTypes, VideoCatalogLoadCompleted, VideoCatalogReleased, VideoMetadataReleased,
+  VideoMetadataLoadCompleted
 } from '../actions/workbench.actions';
-import {IChorusVideoApiClient} from '../../services/chorus-video-api-client.interface';
-import {videoCatalogApiClient} from '../../chorus-page-di.tokens';
 import {State} from '../reducers/transcript.reducer';
+import {IChorusVideoApiClient} from '../../services/chorus-video-api-client.interface';
+import {chorusVideoApiClient} from '../../chorus-page-di.tokens';
 
 @Injectable()
 export class WorkbenchEffects
@@ -22,15 +22,35 @@ export class WorkbenchEffects
     ofType(
       VideoWorkbenchActionTypes.RequestVideoCatalogCommand,
       VideoWorkbenchActionTypes.ReleaseVideoCatalogCommand),
-    switchMap((action: WorkbenchActions) => {
+    switchMap((action: WorkbenchActions): ObservableInput<Action> => {
       if (action.type === VideoWorkbenchActionTypes.ReleaseVideoCatalogCommand) {
         return of(
-          new VideoCatalogRefreshReleased()
+          new VideoCatalogReleased()
         );
-      } else {
-        this.catalogClient.loadCatalog()
+      }
+      return this.catalogClient.loadCatalog()
+        .then(() => {
+          return new VideoCatalogLoadCompleted()
+        });
+    })
+  );
+
+  @Effect({dispatch: true})
+  loadVideoMetadata = this.actions$.pipe(
+    ofType(
+      VideoWorkbenchActionTypes.RequestVideoMetadataCommand,
+      VideoWorkbenchActionTypes.ReleaseVideoMetadataCommand),
+    switchMap((action: WorkbenchActions): ObservableInput<Action> => {
+      if (action.type === VideoWorkbenchActionTypes.ReleaseVideoMetadataCommand) {
+        this.catalogClient.purgeMetadata(action.payload.id);
+
+        return of(
+          new VideoMetadataReleased(action.payload)
+        );
+      } else if (action.type === VideoWorkbenchActionTypes.RequestVideoMetadataCommand) {
+        return this.catalogClient.loadMetadata(action.payload.id)
           .then(() => {
-            return new VideoCatalogRefreshCompleted()
+            return new VideoMetadataLoadCompleted(action.payload)
           });
       }
     })
@@ -41,17 +61,17 @@ export class WorkbenchEffects
     ofType(
       VideoWorkbenchActionTypes.RequestTranscriptCommand,
       VideoWorkbenchActionTypes.ReleaseTranscriptCommand),
-    switchMap((action: WorkbenchActions) => {
+    switchMap((action: WorkbenchActions): ObservableInput<Action> => {
       if (action.type === VideoWorkbenchActionTypes.ReleaseTranscriptCommand) {
-        this.catalogClient.purgeTranscript(action.payload);
+        this.catalogClient.purgeTranscript(action.payload.id);
 
         return of(
-          new TranscriptRefreshReleased(action.payload)
+          new TranscriptReleased(action.payload)
         );
       } else if (action.type === VideoWorkbenchActionTypes.RequestTranscriptCommand) {
-        this.catalogClient.loadTranscript(action.payload)
+        return this.catalogClient.loadTranscript(action.payload.id)
           .then(() => {
-            return new TranscriptRefreshCompleted(action.payload)
+            return new TranscriptLoadCompleted(action.payload)
           });
       }
     })
@@ -60,6 +80,6 @@ export class WorkbenchEffects
   constructor(
     private readonly actions$: Actions,
     private readonly transcriptStore: Store<State>,
-    @Inject(videoCatalogApiClient) private readonly catalogClient: IChorusVideoApiClient
+    @Inject(chorusVideoApiClient) private readonly catalogClient: IChorusVideoApiClient
   ) { }
 }

@@ -1,5 +1,5 @@
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {createFeatureSelector} from '@ngrx/store';
 
 import {TranscriptActions, TranscriptActionTypes} from '../actions/transcript.actions';
 import {Transcript} from '../models/transcript.model';
@@ -78,22 +78,22 @@ export function reducer(
   }
 }
 
-export const featureKey = 'transcript-cache';
+export const featureKey = 'transcript';
 
-export const selectTranscriptEntitiesFeatureState = createFeatureSelector<State>(
+export const selectTranscriptsFeatureState = createFeatureSelector<State>(
   featureKey);
 
-const {
+export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors(selectTranscriptEntitiesFeatureState);
+} = adapter.getSelectors(selectTranscriptsFeatureState);
 
-export const selectTranscriptIds = selectIds;
-export const selectTranscriptEntities = selectEntities;
-export const selectAllTranscripts = selectAll;
-export const selectTotalTranscripts = selectTotal;
+// export const selectTranscriptIds = selectIds;
+// export const selectTranscriptEntities = selectEntities;
+// export const selectAllTranscripts = selectAll;
+// export const selectTotalTranscripts = selectTotal;
 
-export const selectTranscriptEntity =
-  createSelector(selectTranscriptEntitiesFeatureState)
+// export const selectTranscriptEntity =
+//   createSelector(selectTranscriptsFeatureState)

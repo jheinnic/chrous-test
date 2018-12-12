@@ -5,37 +5,39 @@ import {EffectsModule} from '@ngrx/effects';
 import {SharedModule} from '../../shared/shared.module';
 
 import {IChorusVideoApiClient} from './services/chorus-video-api-client.interface';
-import {videoCatalogApiClient, videoCatalogService} from './chorus-page-di.tokens';
+import {chorusVideoApiClient, videoWorkbenchService} from './chorus-page-di.tokens';
 import {PageContainerComponent} from './page-container/page-container.component';
 import {VideoWorkbenchService} from './services/video-workbench.service';
 import {ChorusPageRoutingModule} from './chorus-page-routing.module';
-import * as fromVideoCatalog from './store/reducers/workbench.reducer';
-import * as fromTranscript from './store/reducers/transcript.reducer';
-import * as fromVideoMeta from './store/reducers/video-meta.reducer';
-import * as fromVideos from './store/reducers/video-item.reducer';
-import {fromVideoItem, WorkbenchEffects} from './store';
+import {fromVideoItem, fromVideoMeta, fromTranscript, fromWorkbench, WorkbenchEffects} from './store';
 import {ChorusVideoApiClient} from './services/chorus-video-api-client.service';
+import {TranscriptDialogComponent} from './transcript-dialog/transcript-dialog.component';
+import {CommonModule} from '@angular/common';
+import {TranscriptDialogEffects} from './transcript-dialog/transcript-dialog.effects';
 
 @NgModule({
-  declarations: [PageContainerComponent],
+  declarations: [PageContainerComponent, TranscriptDialogComponent],
   imports: [
     SharedModule,
+    CommonModule,
     ChorusPageRoutingModule,
-    StoreModule.forFeature(fromVideoMeta.featureKey, fromVideoMeta.reducer),
     StoreModule.forFeature(fromVideoItem.featureKey, fromVideoItem.reducer),
+    StoreModule.forFeature(fromVideoMeta.featureKey, fromVideoMeta.reducer),
     StoreModule.forFeature(fromTranscript.featureKey, fromTranscript.reducer),
-    StoreModule.forFeature(fromVideoCatalog.featureKey, fromVideoCatalog.reducer),
-    EffectsModule.forFeature([WorkbenchEffects]),
+    StoreModule.forFeature(fromWorkbench.featureKey, fromWorkbench.reducer),
+    EffectsModule.forFeature([WorkbenchEffects, TranscriptDialogEffects]),
   ],
   providers: [
     {
-      provide: videoCatalogService,
+      provide: videoWorkbenchService,
       useClass: VideoWorkbenchService
     },
     {
-      provide: videoCatalogApiClient,
+      provide: chorusVideoApiClient,
       useClass: ChorusVideoApiClient
-    }
-  ]
+    },
+    TranscriptDialogEffects
+  ],
+  entryComponents: [TranscriptDialogComponent]
 })
 export class ChorusPageModule {}

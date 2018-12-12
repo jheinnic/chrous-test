@@ -4,7 +4,7 @@ import {Inject} from '@angular/core';
 import {filter, map, take, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-import {isTranscript, Transcript} from '../store/models/transcript.model';
+import {isTranscript, Transcript} from '../store';
 import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 
 export class TranscriptResolver implements Resolve<Transcript> {

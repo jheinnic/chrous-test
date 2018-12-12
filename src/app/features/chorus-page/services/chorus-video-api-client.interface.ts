@@ -8,5 +8,7 @@ export interface IChorusVideoApiClient
 
   loadTranscript(videoId: string): Promise<void>;
 
+  purgeMetadata(videoId: string): void;
+
   purgeTranscript(videoId: string): void;
 }

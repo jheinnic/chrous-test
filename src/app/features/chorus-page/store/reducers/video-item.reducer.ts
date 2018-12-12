@@ -67,17 +67,17 @@ export function reducer(
 
 export const featureKey = 'video-item';
 
-export const selectVideoEntitiesFeatureState = createFeatureSelector<State>(featureKey);
+export const selectVideoItemsFeatureState = createFeatureSelector<State>(featureKey);
 
-const {
+export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors(selectVideoEntitiesFeatureState);
+} = adapter.getSelectors(selectVideoItemsFeatureState);
 
-export const selectVideoIds = selectIds;
-export const selectVideoEntities = selectEntities;
-export const selectAllVideos = selectAll;
-export const selectTotalVideos = selectTotal;
+// export const selectVideoIds = selectIds as (state: State) => string[];
+// export const selectVideoEntities = selectEntities;
+// export const selectAllVideos = selectAll;
+// export const selectTotalVideos = selectTotal;
 

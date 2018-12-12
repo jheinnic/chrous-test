@@ -9,13 +9,13 @@ import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 import {VideoWorkbenchService} from '../services/video-workbench.service';
 import {VideoItem} from '../store';
 import {Dictionary} from '@ngrx/entity';
-import {videoCatalogApiClient, videoCatalogService} from '../chorus-page-di.tokens';
+import {chorusVideoApiClient, videoWorkbenchService} from '../chorus-page-di.tokens';
 
 @Injectable()
 export class CatalogLoaderResolver implements Resolve<Dictionary<VideoItem>>
 {
   constructor(
-    @Inject(videoCatalogService) private readonly catalogService: VideoWorkbenchService)
+    @Inject(videoWorkbenchService) private readonly catalogService: VideoWorkbenchService)
   {
   }
 

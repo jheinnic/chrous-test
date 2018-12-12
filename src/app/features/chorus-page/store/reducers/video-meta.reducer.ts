@@ -1,6 +1,7 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { VideoMetadata } from '../models/video-meta.model';
 import { VideoMetaActions, VideoMetaActionTypes } from '../actions/video-meta.actions';
+import {createFeatureSelector} from '@ngrx/store';
 
 export interface State extends EntityState<VideoMetadata> {
   // additional entities state properties
@@ -11,8 +12,6 @@ export const adapter: EntityAdapter<VideoMetadata> = createEntityAdapter<VideoMe
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
 });
-
-export const featureKey = 'video-meta';
 
 export function reducer(
   state = initialState,
@@ -65,9 +64,13 @@ export function reducer(
   }
 }
 
+export const featureKey = 'video-meta';
+
+export const selectVideoMetaFeatureState = createFeatureSelector<State>(featureKey);
+
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors();
+} = adapter.getSelectors(selectVideoMetaFeatureState);

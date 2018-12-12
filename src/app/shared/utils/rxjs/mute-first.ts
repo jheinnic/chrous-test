@@ -1,5 +1,5 @@
 import {combineLatest, Observable, SubscribableOrPromise} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
 
 export function muteFirst<T>(
   fromRemote$: SubscribableOrPromise<any>,
@@ -9,6 +9,7 @@ export function muteFirst<T>(
   return combineLatest(fromRemote$, fromStore$)
     .pipe(
       map((pair: [any, T]): T => pair[1]),
-      // distinctUntilChanged()
+      tap((value) => { console.log('muteFirst', value);}),
+  distinctUntilChanged(),
     );
 }

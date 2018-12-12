@@ -1,4 +1,5 @@
 import {Action} from '@ngrx/store';
+import {OpenDocumentContext, Transcript, VideoMetadata} from '..';
 
 
 /**
@@ -65,6 +66,8 @@ export enum VideoWorkbenchActionTypes
 export class SetCatalogVideoSelection implements Action
 {
   readonly type = VideoWorkbenchActionTypes.SetCatalogVideoSelection;
+
+  constructor(public readonly payload: {id: string}) { }
 }
 
 export class ClearCatalogVideoSelection implements Action
@@ -80,11 +83,15 @@ export class OpenTranscriptBySelection implements Action
 export class OpenTranscriptByVideoId implements Action
 {
   readonly type = VideoWorkbenchActionTypes.OpenTranscriptByVideoId;
+
+  constructor(public readonly payload: {id: string}) { }
 }
 
 export class TranscriptDialogDismissed implements Action
 {
   readonly type = VideoWorkbenchActionTypes.TranscriptDialogDismissed;
+
+  constructor(public readonly payload: {id: string}) { }
 }
 
 export class RequestVideoCatalogCommand implements Action
@@ -97,7 +104,7 @@ export class ReleaseVideoCatalogCommand implements Action
   readonly type = VideoWorkbenchActionTypes.ReleaseVideoCatalogCommand;
 }
 
-export class VideoCatalogRefreshCompleted implements Action
+export class VideoCatalogLoadCompleted implements Action
 {
   readonly type = VideoWorkbenchActionTypes.VideoCatalogLoadCompleted;
 }
@@ -107,7 +114,7 @@ export class VideoCatalogRefreshFailed implements Action
   readonly type = VideoWorkbenchActionTypes.VideoCatalogFailedToLoad;
 }
 
-export class VideoCatalogRefreshReleased implements Action
+export class VideoCatalogReleased implements Action
 {
   readonly type = VideoWorkbenchActionTypes.VideoCatalogReleased;
 }
@@ -116,45 +123,90 @@ export class RequestTranscriptCommand implements Action
 {
   readonly type = VideoWorkbenchActionTypes.RequestTranscriptCommand;
 
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: OpenDocumentContext) { }
 }
 
 export class ReleaseTranscriptCommand implements Action
 {
   readonly type = VideoWorkbenchActionTypes.ReleaseTranscriptCommand;
 
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: {id: string}) { }
 }
 
-export class TranscriptRefreshCompleted implements Action
+export class TranscriptLoadCompleted implements Action
 {
   readonly type = VideoWorkbenchActionTypes.TranscriptLoadCompleted;
 
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: {id: string}) { }
 }
 
-export class TranscriptRefreshFailed implements Action
+export class TranscriptFailedToLoad implements Action
 {
   readonly type = VideoWorkbenchActionTypes.TranscriptFailedToLoad;
 
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: {id: string}) { }
 }
 
-export class TranscriptRefreshReleased implements Action
+export class TranscriptReleased implements Action
 {
   readonly type = VideoWorkbenchActionTypes.TranscriptReleased;
 
-  constructor(public readonly payload: string) { }
+  constructor(public readonly payload: {id: string}) { }
+}
+export class RequestVideoMetadataCommand implements Action
+{
+  readonly type = VideoWorkbenchActionTypes.RequestVideoMetadataCommand;
+
+  constructor(public readonly payload: OpenDocumentContext) { }
+}
+
+export class ReleaseVideoMetadataCommand implements Action
+{
+  readonly type = VideoWorkbenchActionTypes.ReleaseVideoMetadataCommand;
+
+  constructor(public readonly payload: {id: string}) { }
+}
+
+export class VideoMetadataLoadCompleted implements Action
+{
+  readonly type = VideoWorkbenchActionTypes.VideoMetadataLoadCompleted;
+
+  constructor(public readonly payload: {id: string}) { }
+}
+
+export class VideoMetadataFailedToLoad implements Action
+{
+  readonly type = VideoWorkbenchActionTypes.VideoMetadataFailedToLoad;
+
+  constructor(public readonly payload: {id: string}) { }
+}
+
+export class VideoMetadataReleased implements Action
+{
+  readonly type = VideoWorkbenchActionTypes.VideoMetadataReleased;
+
+  constructor(public readonly payload: {id: string}) { }
 }
 
 export type WorkbenchActions =
   RequestVideoCatalogCommand
   | ReleaseVideoCatalogCommand
-  | VideoCatalogRefreshCompleted
+  | VideoCatalogLoadCompleted
   | VideoCatalogRefreshFailed
-  | VideoCatalogRefreshReleased
+  | VideoCatalogReleased
   | RequestTranscriptCommand
   | ReleaseTranscriptCommand
-  | TranscriptRefreshCompleted
-  | TranscriptRefreshFailed
-  | TranscriptRefreshReleased;
+  | TranscriptLoadCompleted
+  | TranscriptFailedToLoad
+  | TranscriptReleased
+  | RequestVideoMetadataCommand
+  | ReleaseVideoMetadataCommand
+  | VideoMetadataLoadCompleted
+  | VideoMetadataFailedToLoad
+  | VideoMetadataReleased
+  | SetCatalogVideoSelection
+  | ClearCatalogVideoSelection
+  | OpenTranscriptBySelection
+  | OpenTranscriptByVideoId
+  | TranscriptDialogDismissed
+;

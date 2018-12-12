@@ -7,7 +7,7 @@ div#contentContainer {
   position: relative;
 }
 
-#player {
+video#player {
   position: relative;
   height: 200px;
   width: 300px;
@@ -18,7 +18,7 @@ div#contentContainer {
   border-radius: 4px;
 }
 
-#bebo {
+div#bebo {
   background: rgba(238,110,255,0.10);
   border: 1px solid #EE6EFF;
   border-radius: 100px;

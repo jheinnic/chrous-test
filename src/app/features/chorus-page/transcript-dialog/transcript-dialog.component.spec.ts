@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-// import { TranscriptDialogComponent } from './transcript-dialog.component._St';
 import { Store, StoreModule } from '@ngrx/store';
 
-describe('PageContainerComponent', () => {
+import {TranscriptDialogComponent} from './transcript-dialog.component';
+
+
+describe('TranscriptDialogComponent', () => {
   let component: TranscriptDialogComponent;
   let fixture: ComponentFixture<TranscriptDialogComponent>;
   let store: Store<any>;

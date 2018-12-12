@@ -1,13 +1,13 @@
 import {Inject, Injectable} from '@angular/core';
-import {take, withLatestFrom} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Dictionary} from '@ngrx/entity';
 import {Store} from '@ngrx/store';
 import * as LRU from 'lru-cache';
 
 import {
-  AddVideos, DeleteTranscript, Transcript, TranscriptEntry, UpsertTranscript, UpsertVideo,
-  VideoItem, fromTranscript, fromVideoItem, fromVideoMeta, fromWorkbench, UpsertVideoMeta
+  AddVideos, DeleteTranscript, DeleteVideoMeta, Transcript, TranscriptEntry, VideoMetadata,
+  fromTranscript, fromVideoItem, fromVideoMeta, UpsertVideoMeta, UpsertTranscript, AddVideoMeta
 } from '../store';
 import {ILruCacheFactoryService} from '../../../core/lru-cache-factory.interface';
 import {lruCacheFactoryService} from '../../../core/core-di.tokens';
@@ -17,6 +17,7 @@ import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 @Injectable()
 export class ChorusVideoApiClient implements IChorusVideoApiClient
 {
+  private unusedMetadataCache: LRU.Cache<string, VideoMetadata>;
   private unusedTranscriptCache: LRU.Cache<string, Transcript>;
 
   constructor(
@@ -25,18 +26,18 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
     @Inject(lruCacheFactoryService) lruCacheFactory: ILruCacheFactoryService,
     private readonly videoItemStore$: Store<fromVideoItem.State>,
     private readonly videoMetaStore$: Store<fromVideoMeta.State>,
-    private readonly transcriptStore$: Store<fromTranscript.State>,
-    private readonly workbenchStore$: Store<fromWorkbench.State>)
+    private readonly transcriptStore$: Store<fromTranscript.State>)
   {
+    this.unusedMetadataCache = lruCacheFactory.createCache({
+      noDisposeOnSet: true,
+      max: 256,
+      length: (metadata: VideoMetadata) => metadata.speakers.length
+    });
+
     this.unusedTranscriptCache = lruCacheFactory.createCache({
       noDisposeOnSet: true,
       max: 256,
       length: (transcript: Transcript) => transcript.entries.length
-      // dispose: (id: string, _transcript: Transcript) => {
-      //   this.transcriptStore$.dispatch(
-      //     new DeleteTranscript({id})
-      //   );
-      // }
     });
   }
 
@@ -58,10 +59,19 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
   public async loadMetadata(videoId: string)
   {
     this.videoMetaStore$.dispatch(
-      new UpsertVideoMeta({
+      new AddVideoMeta({
         videoMeta: {
           id: videoId,
-          speakers: [],
+          title: 'Video Title',
+          speakers: [{
+            displayName: 'Customer',
+            transcriptKey: 'Cust',
+            highlightColor: ''
+          }, {
+            displayName: 'Representative',
+            transcriptKey: 'Rep',
+            highlightColor: ''
+          }],
           resolution: {
             width: 300,
             height: 200
@@ -103,13 +113,29 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
     );
   }
 
+  public purgeMetadata(videoId: string): void
+  {
+    this.videoMetaStore$.select(
+      fromVideoMeta.selectEntities
+    )
+      .pipe(
+        take(1)
+      )
+      .subscribe((entities: Dictionary<VideoMetadata>) => {
+        this.unusedMetadataCache.set(videoId, entities[videoId])
+      });
+
+    this.videoMetaStore$.dispatch(
+      new DeleteVideoMeta({id: videoId})
+    );
+  }
+
   public purgeTranscript(videoId: string): void
   {
     this.transcriptStore$.select(
-      fromTranscript.selectTranscriptEntities
+      fromTranscript.selectEntities
     )
       .pipe(
-        withLatestFrom(),
         take(1)
       )
       .subscribe((entities: Dictionary<Transcript>) => {

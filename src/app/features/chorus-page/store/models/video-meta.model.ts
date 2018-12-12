@@ -3,6 +3,7 @@ import {Required} from 'simplytyped';
 export interface VideoMetadata
 {
   readonly id: string;
+  readonly title: string;
   readonly speakers: ReadonlyArray<Speaker>;
   readonly resolution: VideoResolution;
 }
