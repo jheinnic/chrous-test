@@ -20,6 +20,10 @@ speed-measure-plugin.json
 *.launch
 .settings/
 *.sublime-workspace
+.*.swp
+.*.swo
+.swp
+.swo
 
 # IDE - VSCode
 .vscode/*
@@ -45,3 +49,5 @@ Thumbs.db
 # Throwdown port and exploratory experiments
 src/app/junk*
 throwdown
+
+
