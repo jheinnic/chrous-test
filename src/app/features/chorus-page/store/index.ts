@@ -1,7 +1,6 @@
 
 export * from './models/workbench.model';
 export * from './actions/workbench.actions';
-export * from './effects/workbench.effects';
 
 export * from './models/video-item.model';
 export * from './actions/video-item.actions';

@@ -5,18 +5,17 @@ import {EffectsModule} from '@ngrx/effects';
 
 import {SharedModule} from '../../shared/shared.module';
 
-import {IChorusVideoApiClient} from './services/chorus-video-api-client.interface';
 import {chorusVideoApiClient, videoWorkbenchService} from './chorus-page-di.tokens';
-import {PageContainerComponent} from './page-container/page-container.component';
+import {fromVideoItem, fromVideoMeta, fromTranscript, fromWorkbench} from './store';
 import {VideoWorkbenchService} from './services/video-workbench.service';
-import {ChorusPageRoutingModule} from './chorus-page-routing.module';
-import {fromVideoItem, fromVideoMeta, fromTranscript, fromWorkbench, WorkbenchEffects} from './store';
 import {ChorusVideoApiClient} from './services/chorus-video-api-client.service';
 import {TranscriptDialogComponent} from './transcript-dialog/transcript-dialog.component';
-import {TranscriptDialogOutletComponent} from './transcript-dialog/transcript-dialog-outlet.component';
+import {PageContainerComponent} from './page-container/page-container.component';
+import {ChorusPageRoutingModule} from './chorus-page-routing.module';
+import {WorkbenchEffects} from './store/effects/workbench.effects';
 
 @NgModule({
-  declarations: [PageContainerComponent, TranscriptDialogComponent, TranscriptDialogOutletComponent],
+  declarations: [PageContainerComponent, TranscriptDialogComponent],
   imports: [
     SharedModule,
     CommonModule,

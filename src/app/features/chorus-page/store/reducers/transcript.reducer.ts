@@ -2,14 +2,14 @@ import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {createFeatureSelector} from '@ngrx/store';
 
 import {TranscriptActions, TranscriptActionTypes} from '../actions/transcript.actions';
-import {Transcript} from '../models/transcript.model';
+import {TranscriptRecord} from '../models/transcript.model';
 
-export interface State extends EntityState<Transcript>
+export interface State extends EntityState<TranscriptRecord>
 {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<Transcript> = createEntityAdapter<Transcript>();
+export const adapter: EntityAdapter<TranscriptRecord> = createEntityAdapter<TranscriptRecord>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties

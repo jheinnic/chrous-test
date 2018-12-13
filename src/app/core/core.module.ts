@@ -9,6 +9,13 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {moduleImportGuard} from '../shared/utils/module-import-guard.helper';
 import {lruCacheFactoryService} from './core-di.tokens';
 import {LruCacheFactoryService} from './lru-cache-factory.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { LayoutEffects } from './store/effects/layout.effects';
+import * as fromLayout from './store/reducers/layout.reducer';
+import {PageLayoutComponent} from './layout/page-layout/page-layout.component';
+import {ModalDialogOutletComponent} from './layout/modal-outlet/modal-dialog-outlet.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -24,8 +31,11 @@ import {LruCacheFactoryService} from './lru-cache-factory.service';
       level: NgxLoggerLevel.DEBUG,
       serverLogLevel: NgxLoggerLevel.OFF
     }),
+    StoreModule.forFeature(fromLayout.featureKey, fromLayout.reducer),
+    EffectsModule.forFeature([LayoutEffects]),
+    SharedModule
   ],
-  declarations: [],
+  declarations: [PageLayoutComponent, ModalDialogOutletComponent],
   providers: [
     {
       provide: lruCacheFactoryService,
@@ -37,7 +47,9 @@ import {LruCacheFactoryService} from './lru-cache-factory.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-  ]
+    PageLayoutComponent,
+  ],
+  entryComponents: [],
 })
 export class CoreModule
 {

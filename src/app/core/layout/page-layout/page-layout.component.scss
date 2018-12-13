@@ -1,7 +1,21 @@
-cai-page-layout {
-  min-height: 100%;
-  min-width: 100%;
-  overflow: hidden;
+div#pageContainer {
+  display: flex;
+  flex: 1 1 100vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+div#contentContainer {
+  display: flex;
+  flex: 1 1 100vw;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.spacer {
+  flex: 0 1 auto;
 }
 
 router-outlet {
@@ -20,7 +34,7 @@ footer {
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   left: 0;
   bottom: 0;
   width: 100vw;

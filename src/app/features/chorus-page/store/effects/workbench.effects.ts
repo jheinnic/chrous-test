@@ -1,17 +1,18 @@
 import {Inject, Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
-import {switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {ObservableInput, of} from 'rxjs';
 
 import {
-  TranscriptLoadCompleted, TranscriptReleased, WorkbenchActions,
-  VideoWorkbenchActionTypes, VideoCatalogLoadCompleted, VideoCatalogReleased, VideoMetadataReleased,
-  VideoMetadataLoadCompleted
+  TranscriptLoadCompleted, TranscriptReleased, VideoCatalogLoadCompleted, VideoCatalogReleased,
+  VideoMetadataLoadCompleted, VideoMetadataReleased, VideoWorkbenchActionTypes, WorkbenchActions
 } from '../actions/workbench.actions';
 import {State} from '../reducers/transcript.reducer';
 import {IChorusVideoApiClient} from '../../services/chorus-video-api-client.interface';
 import {chorusVideoApiClient} from '../../chorus-page-di.tokens';
+import {ActivateDialog} from '../../../../core/store';
+import {TranscriptDialogComponent} from '../../transcript-dialog/transcript-dialog.component';
 
 @Injectable()
 export class WorkbenchEffects
@@ -77,9 +78,25 @@ export class WorkbenchEffects
     })
   );
 
+  @Effect({dispatch: true})
+  openViewTranscriptDialogue = this.actions$.pipe(
+    ofType(VideoWorkbenchActionTypes.SetViewTranscriptTargetVideoId),
+    map(function () {
+      return new ActivateDialog(
+        {
+          entryComponent: TranscriptDialogComponent,
+          fixedHeight: 521,
+          fixedWidth: 824,
+          flexDirection: 'row'
+        }
+      );
+    })
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly transcriptStore: Store<State>,
     @Inject(chorusVideoApiClient) private readonly catalogClient: IChorusVideoApiClient
-  ) { }
+  )
+  { }
 }

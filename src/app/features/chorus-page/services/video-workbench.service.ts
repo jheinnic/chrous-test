@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {defer, merge, NEVER, Observable} from 'rxjs';
-import {concatMap, finalize, flatMap, map, share, startWith, switchMap, take, tap} from 'rxjs/operators';
+import {
+  concatMap, filter, finalize, flatMap, map, share, startWith, switchMap, take, tap
+} from 'rxjs/operators';
 
 import {muteFirst} from '../../../shared/utils/rxjs/mute-first';
 import {
-  CombinedVideo, fromTranscript, fromVideoItem, fromVideoMeta, fromWorkbench, ReleaseTranscriptCommand,
-  ReleaseVideoCatalogCommand, ReleaseVideoMetadataCommand, RequestTranscriptCommand,
-  RequestVideoCatalogCommand, RequestVideoMetadataCommand, StateAvailability, Transcript, VideoMetadata,
+  DecoratedTranscript, fromTranscript, fromVideoItem, fromVideoMeta, fromWorkbench,
+  ReleaseTranscriptCommand, ReleaseVideoCatalogCommand, ReleaseVideoMetadataCommand,
+  RequestTranscriptCommand, RequestVideoCatalogCommand, RequestVideoMetadataCommand, StateAvailability,
+  TranscriptRecord, VideoMetadata,
 } from '../store';
 import {IVideoWorkbenchService} from './video-workbench.interface';
 import * as fromRoot from '../../../store';
@@ -39,7 +42,8 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
         )
       );
     }
-  ).pipe(share());
+  )
+    .pipe(share());
 
   public selectVideoDictionary$ = muteFirst(
     this.requireCatalog$,
@@ -72,7 +76,7 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
     );
   }
 
-  public selectTranscript$(videoId: string): Observable<Transcript>
+  public selectTranscript$(videoId: string): Observable<TranscriptRecord>
   {
     return muteFirst(
       this.reserveTranscript$(videoId),
@@ -81,12 +85,18 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
     );
   }
 
-  public selectForViewTranscriptTarget$(): Observable<CombinedVideo>
+  public selectForViewTranscriptTarget$(): Observable<DecoratedTranscript>
   {
     return muteFirst(
       this.reserveAsTargeted(),
-      this.rootStore.select(fromWorkbench.selectViewTranscriptVideo)
+      this.rootStore.select(fromWorkbench.selectDecoratedViewTranscriptVideo)
     )
+      .pipe(
+        filter((value) => !!value),
+        flatMap((value: Observable<DecoratedTranscript>) => {
+          console.log('Got ', value);
+          return value;
+        }))
   }
 
   private reserveVideoDetail$(videoId: string): Observable<never>
@@ -97,7 +107,7 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
           new RequestVideoMetadataCommand({
             id: videoId,
             storeReservation: myRetval,
-            availability: StateAvailability.SUBSCRIBING
+            availability: StateAvailability.LOADING
           })
         );
 
@@ -109,22 +119,24 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
           )
         );
       }
-    ).pipe(share());
+    )
+      .pipe(share());
 
     return this.workbenchStore.select(
       fromWorkbench.selectOpenVideoMetadata
-    ).pipe(
-      flatMap(
-        (storeMap) => {
-          const storeContext = storeMap.get(videoId);
-          if (!!storeContext) {
-            return storeContext.storeReservation;
-          }
+    )
+      .pipe(
+        flatMap(
+          (storeMap) => {
+            const storeContext = storeMap.get(videoId);
+            if (!!storeContext) {
+              return storeContext.storeReservation;
+            }
 
-          return myRetval;
-        }
-      )
-    );
+            return myRetval;
+          }
+        )
+      );
   }
 
   private reserveTranscript$(videoId: string): Observable<never>
@@ -135,20 +147,21 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
           new RequestTranscriptCommand({
             id: videoId,
             storeReservation: myGuard,
-            availability: StateAvailability.SUBSCRIBING
+            availability: StateAvailability.LOADING
           })
         );
 
         return NEVER;
       }
-    ).pipe(
-      finalize(
-        () => this.workbenchStore.dispatch(
-          new ReleaseTranscriptCommand({id: videoId})
-        )
-      ),
-      share()
-    );
+    )
+      .pipe(
+        finalize(
+          () => this.workbenchStore.dispatch(
+            new ReleaseTranscriptCommand({id: videoId})
+          )
+        ),
+        share()
+      );
 
     return this.workbenchStore.select(fromWorkbench.selectOpenTranscripts)
       .pipe(
@@ -173,18 +186,25 @@ export class VideoWorkbenchService implements IVideoWorkbenchService
     )
       .pipe(
         switchMap((videoId: string) => {
-          console.log('Miami' + videoId);
-          return merge(
-            this.reserveTranscript$(videoId).pipe(
-              tap(() => {console.log('Next from reserve transcript');}),
-              finalize(() => {console.log('Complete from reserve transcript');})
-            ),
-            this.reserveVideoDetail$(videoId).pipe(
-              tap(() => {console.log('Next from reserve video');}),
-              finalize(() => {console.log('Complete from reserve video');})
-            )
-          )
-        })
+            console.log(`Reacting to view transcript target becoming ${videoId}`);
+            if (!!videoId) {
+              return merge(
+                this.reserveTranscript$(videoId)
+                  .pipe(
+                    tap(() => {console.log('Next from reserve transcript');}),
+                    finalize(() => {console.log('Complete from reserve transcript');})
+                  ),
+                this.reserveVideoDetail$(videoId)
+                  .pipe(
+                    tap(() => {console.log('Next from reserve video');}),
+                    finalize(() => {console.log('Complete from reserve video');})
+                  )
+              );
+            } else {
+              return NEVER;
+            }
+          }
+        )
       );
   }
 }

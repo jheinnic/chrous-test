@@ -1,30 +1,88 @@
 div#contentContainer {
+  flex: 1 0 822px;
   height: 521px;
-  width: 824px;
+  width: 822px;
+  overflow: hidden;
   background: #FFFFFF;
   border: 1px solid #D7DADE;
   border-radius: 5px;
-  position: relative;
 }
 
-video#player {
-  position: absolute;
+video#transcriptPlayer {
+  //position: absolute;
+  //top: 80px;
+  //left: 260px;
+  flex: 0 0 200px;
   height: 200px;
   width: 300px;
-  top: 80px;
-  left: 260px;
   background: #000000;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.30);
   border-radius: 4px;
 }
 
-div#bebo {
+div#transcriptContainer {
+  display: flex;
+  overflow: auto;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  align-items: flex-start;
+  align-self: stretch;
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-bottom: 84px;
+}
+
+div#snippetsContainer {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+div#bubble {
+  //position: absolute;
+  flex: 0 0 28px;
   background: rgba(238,110,255,0.10);
   border: 1px solid #EE6EFF;
   border-radius: 100px;
-  bottom: 84px;
-  left: 32px;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 8px;
   height: 28px;
   width: 28px;
-  position: absolute;
 }
+
+span {
+  font-family: SFUIText-Regular;
+  display: inline-block;
+  overflow: visible;
+  margin: 8px 12px;
+}
+
+span.title {
+  flex: 0 0 28px;
+  color: #333333;
+  margin-top: 43px;
+  margin-bottom: 9px;
+  font-size: 26px;
+  line-height: 28px;
+}
+
+span.speaker {
+  flex: 0 0 16px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 0
+}
+
+span.snippet {
+  flex: 0 0 20px;
+  font-size: 15px;
+  line-height: 20px;
+  margin-top: 9px;
+}
+

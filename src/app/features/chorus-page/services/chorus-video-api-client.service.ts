@@ -6,8 +6,8 @@ import {Store} from '@ngrx/store';
 import * as LRU from 'lru-cache';
 
 import {
-  AddVideos, DeleteTranscript, DeleteVideoMeta, Transcript, TranscriptEntry, VideoMetadata,
-  fromTranscript, fromVideoItem, fromVideoMeta, UpsertVideoMeta, UpsertTranscript, AddVideoMeta
+  AddVideos, DeleteTranscript, DeleteVideoMeta, TranscriptRecord, TranscriptEntry, VideoMetadata,
+  fromTranscript, fromVideoItem, fromVideoMeta, UpsertTranscript, AddVideoMeta
 } from '../store';
 import {ILruCacheFactoryService} from '../../../core/lru-cache-factory.interface';
 import {lruCacheFactoryService} from '../../../core/core-di.tokens';
@@ -18,7 +18,7 @@ import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 export class ChorusVideoApiClient implements IChorusVideoApiClient
 {
   private unusedMetadataCache: LRU.Cache<string, VideoMetadata>;
-  private unusedTranscriptCache: LRU.Cache<string, Transcript>;
+  private unusedTranscriptCache: LRU.Cache<string, TranscriptRecord>;
 
   constructor(
     private readonly httpClient: HttpClient,
@@ -37,7 +37,7 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
     this.unusedTranscriptCache = lruCacheFactory.createCache({
       noDisposeOnSet: true,
       max: 256,
-      length: (transcript: Transcript) => transcript.entries.length
+      length: (record: TranscriptRecord) => record.transcript.entries.length
     });
   }
 
@@ -66,11 +66,11 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
           speakers: [{
             displayName: 'Customer',
             transcriptKey: 'Cust',
-            highlightColor: ''
+            highlightColor: '#EE6EFF'
           }, {
             displayName: 'Representative',
             transcriptKey: 'Rep',
-            highlightColor: ''
+            highlightColor: '#00A7D1'
           }],
           resolution: {
             width: 300,
@@ -83,7 +83,7 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
 
   public async loadTranscript(videoId: string): Promise<void>
   {
-    let transcript: Transcript =
+    let transcript: TranscriptRecord =
       this.unusedTranscriptCache.get(videoId);
 
     if (!transcript) {
@@ -98,9 +98,11 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
           .toPromise();
       transcript = {
         id: videoId,
-        entries: transcriptEntries.sort(
-          (a: TranscriptEntry, b: TranscriptEntry) => a.time - b.time
-        )
+        transcript: {
+          entries: transcriptEntries.sort(
+            (a: TranscriptEntry, b: TranscriptEntry) => a.time - b.time
+          )
+        }
       };
     } else {
       // The transcript is about to be used again, so rescue it from the cache for
@@ -138,7 +140,7 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
       .pipe(
         take(1)
       )
-      .subscribe((entities: Dictionary<Transcript>) => {
+      .subscribe((entities: Dictionary<TranscriptRecord>) => {
         this.unusedTranscriptCache.set(videoId, entities[videoId])
       });
 

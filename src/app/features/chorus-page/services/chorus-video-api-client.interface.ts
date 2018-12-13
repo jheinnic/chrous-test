@@ -1,4 +1,4 @@
-import {Transcript, VideoItem} from '../store';
+import {TranscriptRecord, VideoItem} from '../store';
 
 export interface IChorusVideoApiClient
 {

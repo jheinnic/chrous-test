@@ -1,7 +1,7 @@
 import {muteFirst} from '../../../shared/utils/rxjs/mute-first';
 import * as fromVideo from '../store/reducers/video-item.reducer';
 import {BehaviorSubject, defer, Observable} from 'rxjs';
-import {CombinedVideo, Transcript, VideoItem, VideoMetadata} from '../store';
+import {CombinedVideo, DecoratedTranscript, TranscriptRecord, VideoItem, VideoMetadata} from '../store';
 import {Dictionary} from '@ngrx/entity';
 
 /**
@@ -10,7 +10,7 @@ import {Dictionary} from '@ngrx/entity';
  *
  * Any state this service requires should also be managed within NgRX.  Most awkwardly, this
  * includes the bookkeeping required to multicast the Observables for artifacts that are
- * selectively loaded--e.g. Video Metadata and Transcript Content.
+ * selectively loaded--e.g. Video Metadata and TranscriptRecord Content.
  */
 export interface IVideoWorkbenchService {
   selectVideoDictionary$: Observable<Dictionary<VideoItem>>;
@@ -21,9 +21,9 @@ export interface IVideoWorkbenchService {
 
   selectTotalVideos$: Observable<number>;
 
-  selectTranscript$(videoId: string): Observable<Transcript>
+  selectTranscript$(videoId: string): Observable<TranscriptRecord>
 
   selectVideoDetail$(videoId: string): Observable<VideoMetadata>;
 
-  selectForViewTranscriptTarget$(): Observable<CombinedVideo>;
+  selectForViewTranscriptTarget$(): Observable<DecoratedTranscript>;
 }

@@ -15,21 +15,20 @@ import {ChorusPageModule} from './features/chorus-page/chorus-page.module';
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     StoreModule.forRoot(reducers, reducerOptions),
     StoreRouterConnectingModule.forRoot({stateKey: 'routerReducer'}),
     EffectsModule.forRoot([AppEffects]),
-    CoreModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     SharedModule,
+    CoreModule,
     ContactsModule,
     ChorusPageModule,
     AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: []
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {OpenDocumentContext, Transcript, VideoMetadata} from '..';
+import {OpenDocumentContext, TranscriptRecord, VideoMetadata} from '..';
 
 
 /**
@@ -43,12 +43,12 @@ export enum VideoWorkbenchActionTypes
   VideoMetadataReleased = '[VideoDetails] Video Metadata Content Released',
 
   // These are Command actions
-  RequestTranscriptCommand = '[Transcripts] Open Transcript',
-  ReleaseTranscriptCommand = '[Transcripts] Release Transcript',
+  RequestTranscriptCommand = '[TranscriptRecords] Open TranscriptRecord',
+  ReleaseTranscriptCommand = '[TranscriptRecords] Release TranscriptRecord',
   // These are Event actions
-  TranscriptLoadCompleted = '[Transcripts] Transcript Load Completed',
-  TranscriptFailedToLoad = '[Transcripts] Transcript Failed To Load',
-  TranscriptReleased = '[Transcripts] Transcript Content Released',
+  TranscriptLoadCompleted = '[TranscriptRecords] TranscriptRecord Load Completed',
+  TranscriptFailedToLoad = '[TranscriptRecords] TranscriptRecord Failed To Load',
+  TranscriptReleased = '[TranscriptRecords] TranscriptRecord Content Released',
 
   // -- Focus Selected is a command action that moves forward a user's intent.
   // -- Dismiss Focus is an event action for reacting to something a user has
@@ -56,11 +56,10 @@ export enum VideoWorkbenchActionTypes
   SetCatalogVideoSelection   = '[VideoCatalog] Set Selected Catalog Video',
   ClearCatalogVideoSelection   = '[VideoCatalog] Set Selected Catalog Video',
 
-  // Two Open Transcript 'commands' are process flows for more primitive commands.
+  // Two Open TranscriptRecord 'commands' are process flows for more primitive commands.
   // Dialog dismissal is an after-the-fact event action.
-  OpenTranscriptBySelection = '[TranscriptWidget] Open Transcript for Catalog Focus',
-  OpenTranscriptByVideoId = '[TranscriptWidget] Open Transcript for Video Id',
-  TranscriptDialogDismissed = '[TranscriptWidget] Transcript Dialog Dismissed',
+  SetViewTranscriptTargetVideoId = '[TranscriptWidget] Set the View Transcript target video Id',
+  ClearViewTranscriptTargetVideoId = '[TranscriptWidget] Clear the View Transcript target video Id',
 }
 
 export class SetCatalogVideoSelection implements Action
@@ -75,23 +74,16 @@ export class ClearCatalogVideoSelection implements Action
   readonly type = VideoWorkbenchActionTypes.ClearCatalogVideoSelection;
 }
 
-export class OpenTranscriptBySelection implements Action
+export class SetViewTranscriptTargetVideoId implements Action
 {
-  readonly type = VideoWorkbenchActionTypes.OpenTranscriptBySelection;
-}
-
-export class OpenTranscriptByVideoId implements Action
-{
-  readonly type = VideoWorkbenchActionTypes.OpenTranscriptByVideoId;
+  readonly type = VideoWorkbenchActionTypes.SetViewTranscriptTargetVideoId;
 
   constructor(public readonly payload: {id: string}) { }
 }
 
-export class TranscriptDialogDismissed implements Action
+export class ClearViewTranscriptTargetVideoId implements Action
 {
-  readonly type = VideoWorkbenchActionTypes.TranscriptDialogDismissed;
-
-  constructor(public readonly payload: {id: string}) { }
+  readonly type = VideoWorkbenchActionTypes.ClearViewTranscriptTargetVideoId;
 }
 
 export class RequestVideoCatalogCommand implements Action
@@ -206,7 +198,7 @@ export type WorkbenchActions =
   | VideoMetadataReleased
   | SetCatalogVideoSelection
   | ClearCatalogVideoSelection
-  | OpenTranscriptBySelection
-  | OpenTranscriptByVideoId
-  | TranscriptDialogDismissed
+  | SetViewTranscriptTargetVideoId
+  | ClearViewTranscriptTargetVideoId
+;;
 ;

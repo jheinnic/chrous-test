@@ -4,7 +4,7 @@ import {Inject, Injectable} from '@angular/core';
 import {filter, map, take, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-import {isTranscript, Transcript} from '../store/models/transcript.model';
+import {isTranscript, TranscriptRecord} from '../store/models/transcript.model';
 import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 import {VideoWorkbenchService} from '../services/video-workbench.service';
 import {VideoItem} from '../store';

@@ -4,18 +4,21 @@ import {Inject} from '@angular/core';
 import {filter, map, take, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-import {isTranscript, Transcript} from '../store';
+import {isTranscript, TranscriptRecord} from '../store';
 import {chorusApiUrl} from '../../../shared/di/config-di.tokens';
 
-export class TranscriptResolver implements Resolve<Transcript> {
+export class TranscriptResolver implements Resolve<TranscriptRecord>
+{
   constructor(
     private readonly httpClient: HttpClient,
-    @Inject(chorusApiUrl) private readonly chorusApiUrl: string) {
+    @Inject(chorusApiUrl) private readonly chorusApiUrl: string)
+  {
 
   }
+
   public resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<Transcript> | Promise<Transcript> | Transcript
+    state: RouterStateSnapshot): Observable<TranscriptRecord> | Promise<TranscriptRecord> | TranscriptRecord
   {
     const videoId = route.queryParamMap.get('id');
 
@@ -27,12 +30,18 @@ export class TranscriptResolver implements Resolve<Transcript> {
         observe: 'body',
         responseType: 'json'
       }
-    ).pipe(
-      map((value) => {return {id: '', entries: value}} ),
-      take(1),
-      tap((value) => {console.log(`Pre filter: ${JSON.stringify(value)}`); }),
-      filter(isTranscript),
-      tap((value) => {console.log(`Post filter: ${JSON.stringify(value)}`); }),
-    );
+    )
+      .pipe(
+        map((value) => {
+          return {
+            id: videoId,
+            transcript: {entries: value}
+          }
+        }),
+        take(1),
+        tap((value) => {console.log(`Pre filter: ${JSON.stringify(value)}`); }),
+        filter(isTranscript),
+        tap((value) => {console.log(`Post filter: ${JSON.stringify(value)}`); }),
+      );
   }
 }

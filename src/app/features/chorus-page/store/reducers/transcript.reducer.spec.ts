@@ -1,6 +1,6 @@
 import { reducer, initialState } from '../reducers/transcript.reducer';
 
-describe('Transcript Reducer', () => {
+describe('TranscriptRecord Reducer', () => {
   describe('unknown action', () => {
     it('should return the initial state', () => {
       const action = {} as any;
