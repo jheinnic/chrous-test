@@ -25,6 +25,11 @@ $chorus-test-theme: mat-light-theme($chorus-test-primary, $chorus-test-accent, $
 // that you are using.
 @include angular-material-theme($chorus-test-theme);
 
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 400;
+  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+}
 
 // Plus imports for other components in your app.
 html, body {
@@ -52,6 +57,6 @@ cai-root {
 body {
   //color: #333333;
   //background-color: rgba(238, 110, 255, 0.10);
-  background-color: rgba(238, 110, 255, 0.1);
-  font-family: SFUIText-Regular, Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgba(247, 242, 227, 0.1);
+  font-family: "San Francisco", Roboto, "Helvetica Neue", sans-serif;
 }

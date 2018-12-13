@@ -4,13 +4,16 @@
     <source src="https://static.chorus.ai/api/{{videoData.id}}.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-  <div id="transcriptContainer" fxFlex="1 1 auto" fxLayout="row nowrap" fxLayoutAlign="start stretch">
-    <div id="snippetsContainer" fxLayout="column nowrap" fxLayoutAlign="baseline start" fxFlexOrder="2">
+  <div id="transcriptContainer">
+    <div id="snippetsContainer" cdkScrollable>
       <ng-container *ngFor="let entry of videoData.entries">
         <span class="speaker" [ngStyle]="entry.inlineStyle">{{entry.displayName}}</span>
         <span class="snippet" [ngStyle]="entry.inlineStyle" *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
       </ng-container>
     </div>
-    <div id="bubble" fxFlex="0 0 28px" fxFlexOrder="1"></div>
+    <div id="customScroll" cdkScrollable>
+      <div class="spacer"></div>
+      <div id="scrollMarker"></div>
+    </div>
   </div>
 </div>
