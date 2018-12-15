@@ -21,7 +21,7 @@ import {SharedModule} from '../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule.forRoot([]),
     LayoutModule,
     BrowserModule.withServerTransition({appId: 'serverApp'}),
     BrowserAnimationsModule,
@@ -49,6 +49,7 @@ import {SharedModule} from '../shared/shared.module';
     HttpClientModule,
     PageLayoutComponent,
   ],
+  bootstrap: [PageLayoutComponent],
   entryComponents: [],
 })
 export class CoreModule

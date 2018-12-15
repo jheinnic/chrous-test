@@ -1,11 +1,15 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, OnDestroy, OnInit, ViewEncapsulation
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Directive, OnDestroy, OnInit,
+  ViewEncapsulation
 } from '@angular/core';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Store} from '@ngrx/store';
-import {ModalDialog} from '../../store/models/layout.models';
-import {fromCoreLayout} from '../../store';
 import {Subscription} from 'rxjs';
+
+import {
+  DialogComponentWithStyling, DialogContainerDynamicStyling, fromCoreLayout, ModalDialog
+} from '../../store';
+import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'cai-modal-dialog-outlet',
@@ -16,56 +20,58 @@ import {Subscription} from 'rxjs';
 })
 export class ModalDialogOutletComponent implements OnInit, OnDestroy
 {
-  public liveDialog?: ModalDialog<ComponentRef<any>>;
+  public useMaskOverlay: boolean;
 
-  public livePortal?: ComponentPortal<ComponentRef<any>>
+  public activeDialog?: ComponentPortal<ComponentRef<any>>;
 
-  public dialogStyle?: InlineDialogStyle;
+  public containerStyling: DialogContainerDynamicStyling;
 
   private storeSubscription: Subscription;
+
+  private pastBootstrap: boolean;
 
   constructor(
     private readonly changeDetector: ChangeDetectorRef,
     private readonly store: Store<fromCoreLayout.State>
   )
-  { }
+  {
+    this.useMaskOverlay = false;
+    this.pastBootstrap = false;
+  }
 
   ngOnInit()
   {
     this.storeSubscription =
-      this.store.select(fromCoreLayout.selectLiveDialog)
+      this.store.select(fromCoreLayout.selectActiveDialogWithStyles)
         .subscribe(
-          (liveDialog: ModalDialog<any>) => {
-            this.liveDialog = liveDialog;
-
-            if (!! liveDialog && !! liveDialog.entryComponent) {
-              this.livePortal =
+          (incomingActivation: DialogComponentWithStyling<any>) => {
+            if (!!incomingActivation && !!incomingActivation.entryComponent) {
+              this.activeDialog =
                 new ComponentPortal<any>(
-                  liveDialog.entryComponent);
-              this.dialogStyle = {
-                'margin-top': `calc(50vh - ${liveDialog.fixedHeight / 2}px)`,
-                'margin-left': `calc(50vw - ${liveDialog.fixedWidth / 2}px)`,
-                'min-width': `${liveDialog.fixedWidth}px`,
-                'max-width': `${liveDialog.fixedWidth}px`,
-                'width': `${liveDialog.fixedWidth}px`,
-                'min-height': `${liveDialog.fixedHeight}px`,
-                'max-height': `${liveDialog.fixedHeight}px`,
-                'height': `${liveDialog.fixedHeight}px`,
-                'flex-direction': liveDialog.flexDirection
-              };
+                  incomingActivation.entryComponent);
+              this.containerStyling =
+                incomingActivation.containerStyling;
+              this.useMaskOverlay =
+                incomingActivation.useMaskOverlay;
 
               this.changeDetector.markForCheck();
-            } else if (!! this.livePortal) {
-              this.livePortal.detach();
-              this.livePortal = undefined;
-              this.dialogStyle = undefined;
+            } else if (!!this.activeDialog) {
+              this.activeDialog.detach();
+              this.activeDialog = undefined;
+              this.containerStyling = undefined;
+              this.useMaskOverlay = false;
 
               this.changeDetector.markForCheck();
+            } else if (this.pastBootstrap) {
+              // We may get sent an initial undefined value before any dialog has been activated
+              // at application bootstrap.  This should only happen one time.
+              throw new Error('Undefined activation after skipping initial bootstrap!?');
+            } else {
+              this.pastBootstrap = true;
             }
 
-            console.log("Live dialog is", this.liveDialog);
-            console.log("Live portal is", this.livePortal);
-            console.log("Dialog styles are", this.dialogStyle);
+            console.log('Live dialog is', incomingActivation);
+            console.log('Live portal is', this.activeDialog);
           }
         );
   }
@@ -74,19 +80,6 @@ export class ModalDialogOutletComponent implements OnInit, OnDestroy
   {
     this.storeSubscription.unsubscribe();
   }
-}
-
-interface InlineDialogStyle
-{
-  'margin-top': string,
-  'margin-left': string,
-  'flex-direction': string,
-  'min-width': string,
-  'max-width': string,
-  'width': string,
-  'min-height': string,
-  'max-height': string,
-  'height': string
 }
 
 // this.liveDialog = {

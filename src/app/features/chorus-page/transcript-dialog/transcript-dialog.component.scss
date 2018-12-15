@@ -2,29 +2,37 @@ div#contentContainer {
   flex: 1 0 822px;
   height: 521px;
   width: 822px;
-  overflow: hidden;
   background: #FFFFFF;
   border: 1px solid #D7DADE;
   border-radius: 5px;
+  box-sizing: border-box;
+  padding: 32px 80px;
 }
 
-video#transcriptPlayer {
-  //position: absolute;
-  //top: 80px;
-  //left: 260px;
-  flex: 0 0 200px;
-  height: 200px;
-  width: 300px;
-  background: #000000;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,0.30);
+div.theaterFrame {
+  display: flex;
+  flex-direction: row;
+  max-width: 304px;
+  max-height: 204px;
+  min-height: 204px;
   border-radius: 4px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+  background: #000000;
+
+  video {
+    width: 296px;
+    margin: auto;
+    background: #000000;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.13);
+    order: 1;
+    flex: 0 0 100%;
+    margin-bottom: 8px;
+  }
 }
 
 div#transcriptContainer {
   flex: 1 1 auto;
   display: flex;
-  overflow: auto;
-  position: relative;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: stretch;
@@ -42,7 +50,9 @@ div#snippetsContainer {
   flex-wrap: nowrap;
   align-items: baseline;
   justify-content: flex-start;
-  order: 2
+  order: 2;
+  position: relative;
+  overflow: auto;
 }
 
 div#customScroll {
@@ -52,15 +62,17 @@ div#customScroll {
   flex-wrap: nowrap;
   align-items: center;
   margin-right: 8px;
+  order: 1;
+  position: relative;
   overflow: auto;
-  order: 1
 }
 
 div#scrollMarker {
   flex: 0 0 28px;
-  background: rgba(238,110,255,0.10);
+  background: rgba(238, 110, 255, 0.10);
   border: 1px solid #EE6EFF;
   border-radius: 100px;
+  margin-top: auto;
   height: 28px;
   width: 28px;
 }
@@ -77,12 +89,15 @@ span {
 }
 
 span.title {
-  flex: 0 0 28px;
+  position: relative;
+  top: -71px;
+  //flex: 0 0 28px;
   color: #333333;
-  padding-top: 43px;
-  margin-bottom: 1px;
+  //padding-top: 43px;
+  //margin-bottom: 1px;
   font-size: 26px;
   line-height: 28px;
+  margin: auto;
 }
 
 span.speaker {

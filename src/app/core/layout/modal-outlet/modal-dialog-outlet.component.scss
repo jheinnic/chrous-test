@@ -1,0 +1,31 @@
+div.outlet-host {
+  position: fixed;
+  z-index: 1500;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  opacity: 1;
+}
+
+div#outlet-host ::ngDeep * {
+  opacity: 50%;
+}
+
+div#outlet-host ::ngDeep .cdkPortalOutlet {
+  opacity: 50%;
+}
+
+
+div.overlay-mask {
+  position: fixed;
+  z-index: 1400;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

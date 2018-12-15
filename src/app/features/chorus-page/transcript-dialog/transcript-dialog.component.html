@@ -1,19 +1,19 @@
+<span id="title">{{videoData.title}}</span>
 <div id="contentContainer" fxLayout="column nowrap" fxLayoutAlign="start center" fxLayoutGap="8px" *ngIf="!!videoData">
-  <span class="title">{{videoData.title}}</span>
-  <video id="transcriptPlayer" controls>
-    <source src="https://static.chorus.ai/api/{{videoData.id}}.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <div id="transcriptContainer">
-    <div id="snippetsContainer" cdkScrollable>
-      <ng-container *ngFor="let entry of videoData.entries">
+  <div class="theaterFrame">
+    <video id="transcriptPlayer" controls>
+      <source src="https://static.chorus.ai/api/{{videoData.id}}.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div id="transcriptContainer" cdkScrollable>
+    <div class="speakerContainer" *ngFor="let entry of videoData.entries">
+      <div id="speakerTag"></div>
+      <div id="snippetContainer">
         <span class="speaker" [ngStyle]="entry.inlineStyle">{{entry.displayName}}</span>
-        <span class="snippet" [ngStyle]="entry.inlineStyle" *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
-      </ng-container>
-    </div>
-    <div id="customScroll" cdkScrollable>
-      <div class="spacer"></div>
-      <div id="scrollMarker"></div>
+        <span class="snippet" [ngStyle]="entry.inlineStyle"
+              *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
+      </div>
     </div>
   </div>
 </div>

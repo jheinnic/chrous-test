@@ -7,15 +7,12 @@ import {ActionReducerMap, MetaReducer} from '@ngrx/store';
  */
 import * as fromRouter from '@ngrx/router-store';
 import * as fromApollo from 'apollo-angular-cache-ngrx';
-import {initialState as apolloInitialState} from 'apollo-angular-cache-ngrx/reducer';
 import {actionLogger} from './action-logger.function';
 import {environment} from '../../environments/environment';
 import {RouterStateModels} from './models';
 
 import RouterStateUrl = RouterStateModels.RouterStateUrl;
 
-// export namespace RootStore
-// {
 /**
  * We treat each reducer like a table in a database. This means our top level state interface
  * is just a map of keys to inner state types.
@@ -25,11 +22,6 @@ export interface State
   apollo: fromApollo.CacheState;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }
-
-/**
- * The root store definition has need for a feature key
- */
-// export const featureKey = 'root';
 
 /**
  * Our state is composed of a map of action reducer functions.
@@ -42,18 +34,8 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 export const initialState: Partial<State> = {
-  apollo: apolloInitialState,
-  routerReducer: {
-    state: {
-      url: '',
-      queryParams: null,
-      params: null,
-      queryParamMap: null,
-      paramMap: null,
-      data: null
-    },
-    navigationId: 0
-  }
+  apollo: fromApollo.apolloReducer(undefined, {type: undefined}),
+  routerReducer: fromRouter.routerReducer(undefined, {type: undefined})
 };
 
 /**
@@ -63,9 +45,5 @@ export const initialState: Partial<State> = {
  */
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [actionLogger] : [];
 
-export const reducerOptions = {
-  initialState,
-  metaReducers
-};
-// }
+export const reducerOptions = { initialState, metaReducers };
 

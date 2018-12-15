@@ -1,12 +1,7 @@
-<cai-modal-dialog-outlet></cai-modal-dialog-outlet>
-<div id="pageContainer" fxFlexFill>
-  <div id="contentContainer" fxFlexFill>
-    <ng-content></ng-content>
+<ng-container>
+  <cai-modal-dialog-outlet [ngStyle]="{}"></cai-modal-dialog-outlet>
+  <div id="pageContainer" fxFlexFill>
+      <router-outlet></router-outlet>
   </div>
-</div>
-<footer id="footer">
-  <img class="logo" src="https://static.chorus.ai/images/chorus-logo.svg">
-  <div class="spacer"></div>
-  <div class="baseline"></div>
-</footer>
+</ng-container>
 

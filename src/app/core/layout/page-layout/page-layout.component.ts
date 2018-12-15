@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 
 @Component({
   selector: 'cai-page-layout',
@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./page-layout.component.scss']
 })
 export class PageLayoutComponent {
-  title = 'Chorus Test';
 }
