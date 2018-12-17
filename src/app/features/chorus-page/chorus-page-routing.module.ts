@@ -30,9 +30,9 @@ const routes: Routes = [
     component: LinkedPageContainerComponent
   },
   {
-    path: '*',
-    canActivate: [],
-    component: LinkedPageContainerComponent
+    path: '**',
+    redirectTo: '/linked',
+    pathMatch: 'full'
   }
 ];
 
