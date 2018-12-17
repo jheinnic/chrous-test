@@ -1,10 +1,10 @@
 span.gridCell {
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
   box-sizing: border-box;
   background: #E6AA6E;
-  border: 2.5px solid #8E99E8;
-  border-radius: 5px;
+  border: 0.75px solid #8E99E8;
+  border-radius: 2.5px;
   display: inline-flex;
   flex-direction:column;
   align-items:center;
@@ -14,6 +14,7 @@ span.gridCell {
 }
 
 div.grid {
-  height: 1090px;
-  width: 1420px;
+  height: 1080px;
+  width: 1920px;
+  opacity: 0.85;
 }

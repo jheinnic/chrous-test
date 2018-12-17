@@ -1,14 +1,21 @@
-import {Data, ParamMap, Params} from '@angular/router';
+import {Data, ParamMap} from '@angular/router';
 
 export namespace RouterStateModels
 {
   export interface RouterStateUrl
   {
     url: string;
-    queryParams: Params;
-    params: Params;
     queryParamMap: ParamMap;
     paramMap: ParamMap;
     data: Data;
   }
+
+  export const initialState: RouterStateUrl = {
+    url: '',
+    // queryParams: null,
+    // params: null,
+    queryParamMap: null,
+    paramMap: null,
+    data: null
+  };
 }

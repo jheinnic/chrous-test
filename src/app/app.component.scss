@@ -1,45 +1,11 @@
 cai-page-layout {
-  min-height: 100%;
-  min-width: 100%;
-  overflow: hidden;
-}
-
-router-outlet {
-  display: none
+  flex: 1 0 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 //:host ::ng-deep * {
 //  flex: 1 1 auto;
 //}
-
-//div.spacer {
-//  flex: 1 0 0;
-//}
-
-footer {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 54px;
-}
-
-footer img.logo {
-  height: 30px;
-  flex: 0 0 30px;
-}
-
-footer div.spacer {
-  flex: 0 1 20px;
-}
-
-footer div.baseline {
-  position: relative;
-  margin-top: 20px;
-  bottom: 0;
-  flex: 0 0 4px;
-  background: #00A7D1;
-}
+//d

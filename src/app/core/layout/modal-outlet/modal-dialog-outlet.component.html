@@ -1,5 +1,8 @@
-<ng-container>
-<div [ngStyle]="dialogStyle" *ngIf="!!livePortal">
-  <ng-template [cdkPortalOutlet]="livePortal"></ng-template>
-</div>
+<ng-container *ngIf="!!activeDialog">
+  <div class="overlay-mask" *ngIf="useMaskOverlay"></div>
+  <div id="outlet-host" class="outlet-host" [cdkPortalOutlet]="activeDialog">
+  </div>
+    <!--[ngStyle]="containerStyling">
+    <ng-template [cdkPortalOutlet]="activeDialog"></ng-template>
+    <ng-template [cdkPortalOutlet]="activeDialog"></ng-template>-->
 </ng-container>

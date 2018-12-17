@@ -49,6 +49,10 @@ export type CombinedVideo =
 export interface RenderReadySpeaker {
   readonly displayName: string;
   readonly transcriptKey: string;
+  readonly markerInlineStyle: {
+    border: string,
+    'background-color': string
+  };
   readonly inlineStyle: {
     color: string
   };

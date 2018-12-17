@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PageLayoutComponent } from './app.component';
+import {PageLayoutComponent} from './page-layout.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -8,9 +8,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule
       ],
-      declarations: [
-        PageLayoutComponent
-      ],
+      declarations: [PageLayoutComponent],
     }).compileComponents();
   }));
 

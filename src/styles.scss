@@ -32,31 +32,48 @@ $chorus-test-theme: mat-light-theme($chorus-test-primary, $chorus-test-accent, $
 }
 
 // Plus imports for other components in your app.
-html, body {
-  //height: 100vh;
-  //overflow: hidden;
-}
-
-//div {
-//  overflow: auto;
-//}
-
-cai-root {
-  flex: 1 1 100%;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-self: stretch;
-  //height: 100%;
-  //width: 100%;
-  margin: 0;
+html {
+  margin: 8px;
 }
 
 body {
-  //color: #333333;
-  //background-color: rgba(238, 110, 255, 0.10);
+  margin: 0;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: revert;
+  color: #333333;
   background-color: rgba(247, 242, 227, 0.1);
   font-family: "San Francisco", Roboto, "Helvetica Neue", sans-serif;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  min-width: 100vw;
+  height: 54px;
+}
+
+footer img.logo {
+  display: block;
+  height: 30px;
+  margin: auto
+}
+
+footer div.baseline {
+  margin-top: 20px;
+  height: 4px;
+  background: #00A7D1;
+}
+
+cai-app-root {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  margin: 0;
+}
+
+router-outlet {
+  display: none
 }

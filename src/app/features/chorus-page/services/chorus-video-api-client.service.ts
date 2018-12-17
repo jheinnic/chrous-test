@@ -62,7 +62,7 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
       new AddVideoMeta({
         videoMeta: {
           id: videoId,
-          title: 'Video Title',
+          title: 'Moment from meeting with Two Pillars',
           speakers: [{
             displayName: 'Customer',
             transcriptKey: 'Cust',
@@ -73,8 +73,8 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
             highlightColor: '#00A7D1'
           }],
           resolution: {
-            width: 300,
-            height: 200
+            width: 1280,
+            height: 720
           }
         }
       })
