@@ -1,59 +1,13 @@
 div#pageContainer {
   display: flex;
-  flex: 1 1 100vh;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-div#contentContainer {
-  display: flex;
   flex: 1 1 100vw;
+  flex-direction: column;
   align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-div.spacer {
-  flex: 0 1 auto;
-}
-
-router-outlet {
-  display: none
-}
-
-//:host ::ng-deep * {
-//  flex: 1 1 auto;
+//router-outlet {
+//  display: none
 //}
 
-//div.spacer {
-//  flex: 1 0 0;
-//}
 
-footer {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 54px;
-}
-
-footer img.logo {
-  height: 30px;
-  flex: 0 0 30px;
-}
-
-footer div.spacer {
-  flex: 0 1 20px;
-}
-
-footer div.baseline {
-  position: relative;
-  margin-top: 20px;
-  bottom: 0;
-  flex: 0 0 4px;
-  background: #00A7D1;
-}

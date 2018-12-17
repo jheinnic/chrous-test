@@ -11,12 +11,8 @@ import {
 } from '../../store';
 import {NgStyle} from '@angular/common';
 
-@Component({
-  selector: 'cai-modal-dialog-outlet',
-  templateUrl: './modal-dialog-outlet.component.html',
-  styleUrls: ['./modal-dialog-outlet.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush
+@Directive({
+  selector: 'div[caiModalDialogOutlet'
 })
 export class ModalDialogOutletComponent implements OnInit, OnDestroy
 {

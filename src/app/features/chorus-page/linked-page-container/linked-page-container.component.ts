@@ -4,31 +4,28 @@ import {
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
+import * as Chance from 'chance';
+import * as Color from 'color';
 
 import {fromWorkbench, SetViewTranscriptTargetVideoId, TranscriptRecord} from '../store';
 import {VideoWorkbenchService} from '../services/video-workbench.service';
 import {videoWorkbenchService} from '../chorus-page-di.tokens';
 
 @Component({
-  selector: 'cai-chorus-page',
-  templateUrl: './page-container.component.html',
-  styleUrls: ['./page-container.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
+  selector: 'cai-linked-chorus-page',
+  templateUrl: './linked-page-container.component.html',
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PageContainerComponent implements OnInit, OnDestroy
+export class LinkedPageContainerComponent implements OnInit, OnDestroy
 {
-  public transcript: TranscriptRecord;
-
-  public videoId: string;
-
-  public transcriptChanges: Subscription;
-
+  private transcriptChanges: Subscription;
+  private videoId: string;
+  
   constructor(
     private readonly route: ActivatedRoute,
     private readonly changeDetector: ChangeDetectorRef,
-    private readonly store: Store<fromWorkbench.State>,
-    @Inject(videoWorkbenchService) private readonly videoWorkbenchService: VideoWorkbenchService)
+    private readonly store: Store<fromWorkbench.State> )
   { }
 
   ngOnInit()

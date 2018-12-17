@@ -1,89 +1,111 @@
-div#contentContainer {
-  flex: 1 0 822px;
+:host {
+  position: fixed;
+  top: calc(50vh - 260.5px);
+  left: calc(50vw - 412px);
   height: 521px;
-  width: 822px;
-  overflow: hidden;
-  background: #FFFFFF;
+  max-width: 824px;
+  width: 824px;
+  z-index: 1500;
+  display: flex;
+  flex-flow: column nowrap;
+  place-content: center flex-start;
+  align-items: center;
+  justify-content: stretch;
+  box-sizing: border-box;
   border: 1px solid #D7DADE;
   border-radius: 5px;
+  background: #FFFFFF;
+  padding: 80px 32px;
+  opacity: 1;
+  overscroll-behavior: none;
 }
 
-video#transcriptPlayer {
-  //position: absolute;
-  //top: 80px;
-  //left: 260px;
-  flex: 0 0 200px;
-  height: 200px;
-  width: 300px;
-  background: #000000;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,0.30);
+div.theaterFrame {
+  flex: 0 0 204px;
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 304px;
+  max-height: 204px;
+  //min-height: 204px;
   border-radius: 4px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+  background: #000000;
+  margin-bottom: 8px;
+  overscroll-behavior: contain;
+  order: 1;
+
+  video {
+    flex: 0 0 296px;
+    max-width: 296px;
+    margin: auto;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13);
+  }
 }
 
-div#transcriptContainer {
-  flex: 1 1 auto;
+div#transcriptFrame {
+  flex: 0 1 auto;
   display: flex;
-  overflow: auto;
-  position: relative;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: stretch;
-  align-items: flex-start;
+  flex-flow: row nowrap;
   align-self: stretch;
-  margin-left: 32px;
-  margin-right: 32px;
-  margin-bottom: 84px;
+  overscroll-behavior: contain;
+  overflow-y: scroll;
+  order: 2;
 }
 
-div#snippetsContainer {
-  flex: 1 1 auto;
+div#transcriptRow {
+  flex: 1 1 100%;
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: baseline;
-  justify-content: flex-start;
-  order: 2
+  flex-flow: column nowrap;
 }
 
-div#customScroll {
-  flex: 0 0 32px;
+div.speakerBlock {
+  flex: 0 0 auto;
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin-right: 8px;
-  overflow: auto;
-  order: 1
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: stretch;
+  position: relative;
+  margin-bottom: 4px;
 }
 
-div#scrollMarker {
+div.endOfTurnMarker {
   flex: 0 0 28px;
-  background: rgba(238,110,255,0.10);
-  border: 1px solid #EE6EFF;
-  border-radius: 100px;
   height: 28px;
   width: 28px;
+  box-sizing: border-box;
+  background: rgba(238, 110, 255, 0.10);
+  border-radius: 100px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  margin-right: 8px;
+  margin-top: auto;
+  order: 1;
 }
 
-div.spacer {
-  flex: 1 0 100%
+div.speakerSnippets {
+  flex: 1 0 auto;
+  order: 2;
 }
 
 span {
-  font-family: "San Francisco";
-  display: inline-block;
-  overflow: visible;
+  display: block;
   padding: 8px 12px;
+  font-family: "San Francisco";
 }
 
-span.title {
-  flex: 0 0 28px;
+span#title {
+  position: absolute;
+  display: inline-block;
+  top: 41px;
   color: #333333;
-  padding-top: 43px;
-  margin-bottom: 1px;
   font-size: 26px;
   line-height: 28px;
+  margin: auto;
 }
+
+//flex: 0 0 28px;
+//padding-top: 43px;
+//margin-bottom: 1px;
 
 span.speaker {
   flex: 0 0 12px;

@@ -6,6 +6,9 @@ import {Keys} from 'simplytyped';
 
 export const environment = {
   production: false,
+  developerSupportModules: () => [
+    StoreDevtoolsModule.instrument()
+  ],
   chorusApiUrl: '/api',
   keycloakConfigPath: '/assets/keycloak.json',
   keycloakServerUrl: 'http://portfolio.dev.jchein.name:28080/auth',
@@ -22,3 +25,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 import 'zone.js/dist/zone-error';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';

@@ -1,0 +1,12 @@
+<ng-container>
+  <h1>Spec sample modal rendered over various overlay conditions</h1>
+  <a [routerLink]="['/linked']" [queryParams]="{id: undefined}">This page, without modal</a>
+  <br>
+  <a [routerLink]="['/']" [queryParams]="{id: '4d79041e-f25f-421d-9e5f-3462459b9934'}">Modal over themed, blank page</a>
+  <br>
+  <a [routerLink]="['/linked']" [queryParams]="{id: '4d79041e-f25f-421d-9e5f-3462459b9934'}">Modal over themed, sparse page (this page)</a>
+  <br>
+  <a [routerLink]="['/tiled']" [queryParams]="{id: '4d79041e-f25f-421d-9e5f-3462459b9934'}">Modal over themed, filled page</a>
+  <br>
+  <a [routerLink]="['/tiled']" [queryParams]="{id: undefined}">Themed, filled page, without modal</a>
+</ng-container>
