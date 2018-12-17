@@ -1,7 +1,7 @@
 import {ComponentType} from '@angular/cdk/portal';
-import {ModalRegistrationComponent} from '../../../shared/modal/modal-registration.component';
 import {InjectionToken} from '@angular/core';
-import {ModalTypeConfiguration} from '../../../shared/modal/modal-type-configuration.interface';
+import {ModalRegistrationComponent} from '../../../shared/modal/modal-registration.component';
+import {DialogConfiguration} from '../../../shared/modal/dialog-configuration.interface';
 
 export interface ModalDialog<T>
 {
@@ -12,11 +12,11 @@ export interface ModalDialog<T>
   useMaskOverlay?: boolean;
 }
 
-export interface AvailableModalDialog {
-  identifier: InjectionToken<ModalRegistrationComponent>;
-  config: ModalTypeConfiguration
-  provider: ModalRegistrationComponent;
-}
+// export interface AvailableModalDialog {
+//   identifier: InjectionToken<ModalRegistrationComponent>;
+//   config: DialogConfiguration;
+//   provider: ModalRegistrationComponent;
+// }
 
 /**
  * A selector-derived interface describing the CSS Style attributes the container injecting a

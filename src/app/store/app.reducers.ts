@@ -6,7 +6,7 @@ import {ActionReducerMap, MetaReducer} from '@ngrx/store';
  * notation packages up all of the exports into a single object.
  */
 import * as fromRouter from '@ngrx/router-store';
-import * as fromApollo from 'apollo-angular-cache-ngrx';
+// import * as fromApollo from 'apollo-angular-cache-ngrx';
 import {actionLogger} from './action-logger.function';
 import {environment} from '../../environments/environment';
 import {RouterStateModels} from './models';
@@ -19,7 +19,7 @@ import RouterStateUrl = RouterStateModels.RouterStateUrl;
  */
 export interface State
 {
-  apollo: fromApollo.CacheState;
+  // apollo: fromApollo.CacheState;
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
@@ -29,12 +29,12 @@ export interface State
  * and the current or initial state and return a new immutable state.
  */
 export const reducers: ActionReducerMap<State> = {
-  apollo: fromApollo.apolloReducer,
+  // apollo: fromApollo.apolloReducer,
   routerReducer: fromRouter.routerReducer
 };
 
 export const initialState: Partial<State> = {
-  apollo: fromApollo.apolloReducer(undefined, {type: undefined}),
+  // apollo: fromApollo.apolloReducer(undefined, {type: undefined}),
   routerReducer: fromRouter.routerReducer(undefined, {type: undefined})
 };
 

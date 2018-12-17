@@ -3,16 +3,11 @@ import {
 } from '@angular/core';
 import {CdkPortal} from '@angular/cdk/portal';
 
-import {Store} from '@ngrx/store';
-import {NGXLogger} from 'ngx-logger';
-
-import {LayoutActions, fromCoreLayout} from '../../core/store';
 import {ModalRegistrationComponent} from './modal-registration.component';
-import {logger} from 'codelyzer/util/logger';
 
 
 @Directive({
-  selector: 'span[cai-modal-title], span[caiModalTemplate]'
+  selector: 'span[cai-modal-title], span[caiModalTitle]'
 })
 export class ModalTitleDirective implements OnInit, OnDestroy {
   constructor(@Self() private cdkPortal: CdkPortal,
@@ -21,7 +16,7 @@ export class ModalTitleDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.hostComponent.injectTitle(this);
+    this.hostComponent.injectTitle(this.cdkPortal);
   }
 
   ngOnDestroy(): void {

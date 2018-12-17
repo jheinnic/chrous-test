@@ -1,9 +1,9 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 
 import {
-  DialogComponentWithStyling, DialogContainerDynamicStyling, ModalDialog
-} from '../models/layout.models';
-import {LayoutActions, LayoutActionTypes} from '../actions/layout.actions';
+  DialogComponentWithStyling, DialogContainerDynamicStyling,
+  LayoutActions, LayoutActionTypes, ModalDialog
+} from '..';
 
 
 export interface State {

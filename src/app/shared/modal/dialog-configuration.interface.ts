@@ -2,14 +2,17 @@ import {InitialPositionStrategy} from './initial-position-strategy.enum';
 import {MixedContentHandlingStrategy} from './mixed-content-handling-strategy.interface';
 import {ModalRegistrationComponent} from './modal-registration.component';
 import {InjectionToken} from '@angular/core';
+import {OnNewDialogMode} from './on-new-dialog-mode.enum';
+import {ExitTrigger} from './exit-mode.enum';
 
-export class ModalTypeConfiguration {
+export class DialogConfiguration
+{
   readonly identifier: InjectionToken<ModalRegistrationComponent>;
 
-    /**
-     * Maximum region of viewport dialog should accept if available.
-     */
-    readonly maxDialogWidth;
+  /**
+   * Maximum region of viewport dialog should accept if available.
+   */
+  readonly maxDialogWidth;
 
   /**
    * Maximum region of viewport dialog should accept if available.
@@ -34,16 +37,28 @@ export class ModalTypeConfiguration {
    * True if an overlay is requested; false otherwise.
    */
   readonly useOverlayMask: boolean;
-    /**
-     *
-     */
-    readonly positioningStrategy: InitialPositionStrategy;
+
+  /**
+   *
+   */
+  readonly positioningStrategy: InitialPositionStrategy;
 
   /**
    * If both a scrolling and a static content block is present; describe how they
    * are to be combined by supplying an instance of a MixedTypeConfiguration.  There
    * are three strategy types available.  IF one or no content types are used; then
    * this property should be left undefined.
-   */
   readonly mixedContentStrategy?: MixedContentHandlingStrategy;
+   */
+
+  /**
+   * TODO: Don't reinvent the existing event names!
+   */
+  readonly supportedExitTriggers: Set<ExitTrigger>
+
+  /*
+   * Define behavior if another dialog activation triggers while registered instance is
+   * still chartered as activated.
+   */
+  readonly onNewDialog: OnNewDialogMode;
 }

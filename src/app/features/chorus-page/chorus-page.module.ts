@@ -13,9 +13,10 @@ import {TranscriptDialogComponent} from './transcript-dialog/transcript-dialog.c
 import {PageContainerComponent} from './page-container/page-container.component';
 import {ChorusPageRoutingModule} from './chorus-page-routing.module';
 import {WorkbenchEffects} from './store/effects/workbench.effects';
+import {TiledPageContainerComponent} from './tiled-page-container/tiled-page-container.component';
 
 @NgModule({
-  declarations: [PageContainerComponent, TranscriptDialogComponent],
+  declarations: [PageContainerComponent, TranscriptDialogComponent, TiledPageContainerComponent],
   imports: [
     SharedModule,
     CommonModule,

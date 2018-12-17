@@ -4,6 +4,7 @@ import {PageContainerComponent} from './page-container/page-container.component'
 import {getQueryParamGuardProvider} from '../../shared/guards/get-query-param-guard-provider.function';
 import {getOnEntryQueryParamGuardProvider} from '../../shared/guards/get-on-entry-query-param-guard-provider.function';
 import {CatalogLoaderResolver} from './guards/catalog-loader.resolver';
+import {TiledPageContainerComponent} from './tiled-page-container/tiled-page-container.component';
 
 const idRequiredGuard: InjectionToken<CanActivate> =
   new InjectionToken<CanActivate>('IdRequiredGuard<id>');
@@ -13,10 +14,13 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     canActivate: [idRequiredGuard],
-    resolve: {
-      catalogPreload: CatalogLoaderResolver
-    },
     component: PageContainerComponent
+  },
+  {
+    path: 'tiled',
+    pathMatch: 'full',
+    canActivate: [],
+    component: TiledPageContainerComponent
   }
 ];
 

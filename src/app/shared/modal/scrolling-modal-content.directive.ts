@@ -8,18 +8,16 @@ import {LayoutActions, fromCoreLayout} from '../../core/store';
 import {ModalRegistrationComponent} from './modal-registration.component';
 
 @Directive({
-  selector: '[cai-modal-template], [caiModalTemplate]'
+  selector: '[cai-modal-scrolling-content], [cai-modal-scrolling-content]'
 })
 export class ScrollingModalContentDirective {
   constructor(@Self() private cdkPortal: CdkPortal,
     @Host() private hostComponent: ModalRegistrationComponent)
-  {
-  }
+  { }
 
   ngOnInit(): void {
-    this.hostComponent.injectTitle(this.cdkPortal);
+    this.hostComponent.injectScrollingContent(this.cdkPortal);
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void { }
 }

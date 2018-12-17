@@ -6,10 +6,10 @@
       Your browser does not support the video tag.
     </video>
   </div>
-  <div id="transcriptContainer" cdkScrollable>
-    <div class="speakerContainer" *ngFor="let entry of videoData.entries">
-      <div id="speakerTag"></div>
-      <div id="snippetContainer">
+  <div id="transcriptFrame" cdkScrollable>
+    <div class="speakerBlock" *ngFor="let entry of videoData.entries">
+      <div id="endOfTurnMarker"></div>
+      <div id="speakerSnippets">
         <span class="speaker" [ngStyle]="entry.inlineStyle">{{entry.displayName}}</span>
         <span class="snippet" [ngStyle]="entry.inlineStyle"
               *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
