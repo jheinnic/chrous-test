@@ -5,6 +5,7 @@ import {getQueryParamGuardProvider} from '../../shared/guards/get-query-param-gu
 import {getOnEntryQueryParamGuardProvider} from '../../shared/guards/get-on-entry-query-param-guard-provider.function';
 import {CatalogLoaderResolver} from './guards/catalog-loader.resolver';
 import {TiledPageContainerComponent} from './tiled-page-container/tiled-page-container.component';
+import {LinkedPageContainerComponent} from './linked-page-container/linked-page-container.component';
 
 const idRequiredGuard: InjectionToken<CanActivate> =
   new InjectionToken<CanActivate>('IdRequiredGuard<id>');
@@ -21,6 +22,17 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [],
     component: TiledPageContainerComponent
+  },
+  {
+    path: 'linked',
+    pathMatch: 'full',
+    canActivate: [],
+    component: LinkedPageContainerComponent
+  },
+  {
+    path: '*',
+    canActivate: [],
+    component: LinkedPageContainerComponent
   }
 ];
 

@@ -1,10 +1,10 @@
 :host {
   position: fixed;
-  top: calc(50vh - 261px);
-  left: calc(50vw - 411px);
+  top: calc(50vh - 260.5px);
+  left: calc(50vw - 412px);
   height: 521px;
-  max-width: 822px;
-  width: 822px;
+  max-width: 824px;
+  width: 824px;
   z-index: 1500;
   display: flex;
   flex-flow: column nowrap;
@@ -25,7 +25,7 @@ div.theaterFrame {
   display: flex;
   flex-flow: row nowrap;
   max-width: 304px;
-  //max-height: 204px;
+  max-height: 204px;
   //min-height: 204px;
   border-radius: 4px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
@@ -35,10 +35,10 @@ div.theaterFrame {
   order: 1;
 
   video {
-    flex: 0 0 100%;
-    width: 296px;
+    flex: 0 0 296px;
+    max-width: 296px;
     margin: auto;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.13);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.13);
   }
 }
 
@@ -65,26 +65,25 @@ div.speakerBlock {
   align-items: flex-start;
   justify-content: stretch;
   position: relative;
-  //overflow: visible;
+  margin-bottom: 4px;
 }
 
 div.endOfTurnMarker {
   flex: 0 0 28px;
   height: 28px;
   width: 28px;
+  box-sizing: border-box;
   background: rgba(238, 110, 255, 0.10);
-  //border: 1px solid #EE6EFF;
   border-radius: 100px;
-  margin: 4px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  margin-right: 8px;
   margin-top: auto;
   order: 1;
-  //overflow: auto;
 }
 
 div.speakerSnippets {
   flex: 1 0 auto;
-  margin-right: 8px;
-  margin-bottom: 8px;
   order: 2;
 }
 
@@ -94,16 +93,14 @@ span {
   font-family: "San Francisco";
 }
 
-span.title {
-  position: relative;
+span#title {
+  position: absolute;
   display: inline-block;
-  //top: -71px;
+  top: 41px;
   color: #333333;
   font-size: 26px;
   line-height: 28px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 41px;
+  margin: auto;
 }
 
 //flex: 0 0 28px;

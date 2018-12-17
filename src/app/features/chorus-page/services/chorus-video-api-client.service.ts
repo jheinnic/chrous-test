@@ -62,7 +62,7 @@ export class ChorusVideoApiClient implements IChorusVideoApiClient
       new AddVideoMeta({
         videoMeta: {
           id: videoId,
-          title: 'Video Title',
+          title: 'Moment from meeting with Two Pillars',
           speakers: [{
             displayName: 'Customer',
             transcriptKey: 'Cust',
