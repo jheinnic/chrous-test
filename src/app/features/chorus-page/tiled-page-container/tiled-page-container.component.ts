@@ -53,8 +53,8 @@ export class TiledPageContainerComponent implements OnInit, OnDestroy
     @Inject(videoWorkbenchService) private readonly videoWorkbenchService: VideoWorkbenchService
   )
   {
-    this.gridHeight = 1080;
-    this.gridWidth = 1410;
+    this.gridHeight = 1050;
+    this.gridWidth = 1920;
     this.cellHeight = 35;
     this.cellWidth = 35;
 

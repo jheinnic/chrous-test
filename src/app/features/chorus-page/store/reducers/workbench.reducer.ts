@@ -15,6 +15,7 @@ import {Speaker, VideoMetadata} from '../models/video-meta.model';
 import {TranscriptEntry, TranscriptRecord} from '../models/transcript.model';
 import {from, Observable} from 'rxjs';
 import {endWith, filter, map, scan, toArray} from 'rxjs/operators';
+import {rgb} from 'color';
 
 export const initialState: VideoWorkbench = {
   catalogLoadState: StateAvailability.UNAVAILABLE,
@@ -316,9 +317,17 @@ function decorateTranscriptForDisplay(transcriptMetaCombo: CombinedVideo): undef
   // consecutive runs.
   const speakerMap: Map<string, RenderReadySpeaker> = transcriptMetaCombo.speakers.reduce(
     function (map: Map<string, RenderReadySpeaker>, speaker: Speaker) {
+      // Parse the highlight color to add background alpha
+      const colorObj = rgb(speaker.highlightColor);
+      const bgColorObj = colorObj.alpha(0.1);
+
       map.set(speaker.transcriptKey, {
         displayName: speaker.displayName,
         transcriptKey: speaker.transcriptKey,
+        markerInlineStyle: {
+          border: `1px solid ${colorObj.toString()}`,
+          'background-color': `${bgColorObj.toString()}`
+        },
         inlineStyle: {
           color: speaker.highlightColor
         }
@@ -380,10 +389,14 @@ function decorateTranscriptForDisplay(transcriptMetaCombo: CombinedVideo): undef
           speakerMap.get(
             snippetList[0].speaker);
         if (!!speaker) {
-          console.warn('Caution: filling in blanks for an unmatched speaker!');
+          // console.warn('Caution: filling in blanks for an unmatched speaker!');
           speaker = {
             displayName: '',
             transcriptKey: '',
+            markerInlineStyle: {
+              border: '',
+              'background-color': ''
+            },
             inlineStyle: {
               color: ''
             }

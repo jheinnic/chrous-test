@@ -1,140 +1,130 @@
 :host {
+  position: fixed;
+  top: calc(50vh - 261px);
+  left: calc(50vw - 411px);
   height: 521px;
-  width: 822px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: stretch;
-  overscroll-behavior: none;
-}
-
-div#contentContainer {
-  flex: 0 1 822px;
   max-width: 822px;
   width: 822px;
-  height: 521px;
+  z-index: 1500;
   display: flex;
   flex-flow: column nowrap;
   place-content: center flex-start;
   align-items: center;
-  box-sizing: border-box;
   justify-content: stretch;
-  background: #FFFFFF;
+  box-sizing: border-box;
   border: 1px solid #D7DADE;
   border-radius: 5px;
-  padding: 32px 80px;
+  background: #FFFFFF;
+  padding: 80px 32px;
+  opacity: 1;
   overscroll-behavior: none;
+}
 
+div.theaterFrame {
+  flex: 0 0 204px;
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 304px;
+  //max-height: 204px;
+  //min-height: 204px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+  background: #000000;
+  margin-bottom: 8px;
+  overscroll-behavior: contain;
+  order: 1;
 
-  div.theaterFrame {
+  video {
     flex: 0 0 100%;
-    display: flex;
-    flex-direction: row;
-    max-width: 304px;
-    max-height: 204px;
-    min-height: 204px;
-    border-radius: 4px;
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
-    background: #000000;
-    margin-bottom: 8px;
-    overscroll-behavior: contain;
-    order: 1;
-
-    video {
-      flex: 0 0 100%;
-      width: 296px;
-      margin: auto;
-      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.13);
-    }
-  }
-
-  div#transcriptFrame {
-    flex: 0 1 auto;
-    display: block;
-    overscroll-behavior: contain;
-    align-self: stretch;
-    order: 2;
-  }
-
-  div.speakerBlock {
-    flex: 0 0 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: stretch;
-    position: relative;
-    overscroll-behavior: contain;
-    overflow: auto;
-  }
-
-  //div.singleSnippet {
-  //  flex: 0 0 auto;
-  //  display: block;
-    //flex-direction: row;
-    //align-items: flex-start;
-    //justify-content: flex-end;
-  //}
-
-  div.endOfTurnMarker {
-    flex: 0 0 28px;
-    background: rgba(238, 110, 255, 0.10);
-    border: 1px solid #EE6EFF;
-    border-radius: 100px;
-    margin-top: auto;
-    height: 28px;
-    width: 28px;
-    order: 1
-  }
-
-  div.speakerRun {
-    flex: 0 1 auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin-right: 8px;
-    order: 2
-
-  }
-
-  span {
-    font-family: "San Francisco";
-    display: block;
-    overflow: visible;
-    padding: 8px 12px;
-  }
-
-  span.title {
-    position: relative;
-    display: inline-block;
-    top: -71px;
-    color: #333333;
-    font-size: 26px;
-    line-height: 28px;
+    width: 296px;
     margin: auto;
-  }
-
-  //flex: 0 0 28px;
-  //padding-top: 43px;
-  //margin-bottom: 1px;
-
-  span.speaker {
-    flex: 0 0 12px;
-    font-size: 12px;
-    line-height: 16px;
-    padding: 0;
-    margin-top: 8px;
-    margin-left: 12px;
-  }
-
-  span.snippet {
-    flex: 0 0 15px;
-    font-size: 15px;
-    line-height: 20px;
-    margin-top: 1px;
-    background: #F7F7F7;
-    border-radius: 100px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.13);
   }
 }
+
+div#transcriptFrame {
+  flex: 0 1 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  align-self: stretch;
+  overscroll-behavior: contain;
+  overflow-y: scroll;
+  order: 2;
+}
+
+div#transcriptRow {
+  flex: 1 1 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+div.speakerBlock {
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: stretch;
+  position: relative;
+  //overflow: visible;
+}
+
+div.endOfTurnMarker {
+  flex: 0 0 28px;
+  height: 28px;
+  width: 28px;
+  background: rgba(238, 110, 255, 0.10);
+  //border: 1px solid #EE6EFF;
+  border-radius: 100px;
+  margin: 4px;
+  margin-top: auto;
+  order: 1;
+  //overflow: auto;
+}
+
+div.speakerSnippets {
+  flex: 1 0 auto;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  order: 2;
+}
+
+span {
+  display: block;
+  padding: 8px 12px;
+  font-family: "San Francisco";
+}
+
+span.title {
+  position: relative;
+  display: inline-block;
+  //top: -71px;
+  color: #333333;
+  font-size: 26px;
+  line-height: 28px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 41px;
+}
+
+//flex: 0 0 28px;
+//padding-top: 43px;
+//margin-bottom: 1px;
+
+span.speaker {
+  flex: 0 0 12px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0;
+  margin-top: 8px;
+  margin-left: 12px;
+}
+
+span.snippet {
+  flex: 0 0 15px;
+  font-size: 15px;
+  line-height: 20px;
+  margin-top: 1px;
+  background: #F7F7F7;
+  border-radius: 100px;
+}
+

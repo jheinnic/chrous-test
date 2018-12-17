@@ -1,5 +1,6 @@
-<span id="title">{{videoData.title}}</span>
-<div id="contentContainer" fxLayout="column nowrap" fxLayoutAlign="start center" fxLayoutGap="8px" *ngIf="!!videoData">
+<!--div id="contentContainer" fxLayout="column nowrap" fxLayoutAlign="start center" fxLayoutGap="8px"-->
+<ng-container *ngIf="!!videoData">
+  <span id="title">{{videoData.title}}</span>
   <div class="theaterFrame">
     <video id="transcriptPlayer" controls>
       <source src="https://static.chorus.ai/api/{{videoData.id}}.mp4" type="video/mp4">
@@ -7,13 +8,15 @@
     </video>
   </div>
   <div id="transcriptFrame" cdkScrollable>
-    <div class="speakerBlock" *ngFor="let entry of videoData.entries">
-      <div id="endOfTurnMarker"></div>
-      <div id="speakerSnippets">
-        <span class="speaker" [ngStyle]="entry.inlineStyle">{{entry.displayName}}</span>
-        <span class="snippet" [ngStyle]="entry.inlineStyle"
-              *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
+    <div id="transcriptRow">
+      <div class="speakerBlock" *ngFor="let entry of videoData.entries">
+        <div class="endOfTurnMarker" [ngStyle]="entry.markerInlineStyle"></div>
+        <div class="speakerSnippets">
+          <span class="speaker" [ngStyle]="entry.inlineStyle">{{entry.displayName}}</span>
+          <span class="snippet" [ngStyle]="entry.inlineStyle"
+                *ngFor="let snippetText of entry.snippets">{{snippetText}}</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
